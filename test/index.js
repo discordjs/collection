@@ -170,6 +170,11 @@ test('reduce collection into a single value without initial value', () => {
   assert.strictEqual(sum, 6);
 });
 
+test('reduce empty collection without initial value', () => {
+  const coll = new Collection();
+  assert.throws(() => coll.reduce((a, x) => a + x), /^TypeError: Reduce of empty collection with no initial value$/);
+});
+
 test('iterate over each item', () => {
   const coll = new Collection();
   coll.set('a', 1);
