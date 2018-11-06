@@ -396,10 +396,15 @@ class Collection extends Map {
     if (!collection) return false;
     if (this === collection) return true;
     if (this.size !== collection.size) return false;
-    return !this.find((value, key) => {
-      const testVal = collection.get(key);
-      return testVal !== value || (testVal === undefined && !collection.has(key));
-    });
+    for (const [key, value] of this) {
+      if (!collection.has(key)) {
+        return false;
+      }
+      if (value !== collection.get(key)) {
+        return false;
+      }
+    }
+    return true;
   }
 
   /**
