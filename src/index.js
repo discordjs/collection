@@ -247,7 +247,7 @@ class Collection extends Map {
   }
 
   /**
-   * Maps each item to another value. Identical in behavior to
+   * Maps each item to another value into an array. Identical in behavior to
    * [Array.map()](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Array/map).
    * @param {Function} fn Function that produces an element of the new array, taking three arguments
    * @param {*} [thisArg] Value to use as `this` when executing function
@@ -260,6 +260,21 @@ class Collection extends Map {
     let i = 0;
     for (const [key, val] of this) arr[i++] = fn(val, key, this);
     return arr;
+  }
+
+  /**
+   * Maps each item to another value into a collection. Identical in behavior to
+   * [Array.map()](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Array/map).
+   * @param {Function} fn Function that produces an element of the new collection, taking three arguments
+   * @param {*} [thisArg] Value to use as `this` when executing function
+   * @returns {Array}
+   * @example collection.mapValues(user => user.tag);
+   */
+  mapValues(fn, thisArg) {
+    if (typeof thisArg !== 'undefined') fn = fn.bind(thisArg);
+    const coll = new this.constructor[Symbol.species]();
+    for (const [key, val] of this) coll.set(key, fn(val, key, this));
+    return coll;
   }
 
   /**

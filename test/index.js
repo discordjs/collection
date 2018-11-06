@@ -136,6 +136,15 @@ test('map items in a collection into an array', () => {
   assert.deepStrictEqual(mapped, [2, 3, 4]);
 });
 
+test('map items in a collection into a collection', () => {
+  const coll = new Collection();
+  coll.set('a', 1);
+  coll.set('b', 2);
+  coll.set('c', 3);
+  const mapped = coll.mapValues(x => x + 1);
+  assert.deepStrictEqual(mapped.array(), [2, 3, 4]);
+});
+
 test('check if some items pass a predicate', () => {
   const coll = new Collection();
   coll.set('a', 1);
