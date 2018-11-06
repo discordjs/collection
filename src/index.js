@@ -407,8 +407,13 @@ class Collection extends Map {
    * @example collection.sort((userA, userB) => userA.createdTimestamp - userB.createdTimestamp);
    */
   sort(compareFunction = (x, y) => +(x > y) || +(x === y) - 1) {
-    return new this.constructor[Symbol.species]([...this.entries()]
-      .sort((a, b) => compareFunction(a[1], b[1], a[0], b[0])));
+    const entries = [...this.entries()];
+    entries.sort((a, b) => compareFunction(a[1], b[1], a[0], b[0]));
+    this.clear();
+    for (const [k, v] of entries) {
+      this.set(k, v);
+    }
+    return this;
   }
 }
 

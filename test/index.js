@@ -221,12 +221,12 @@ test('check equality of two collections', () => {
   assert.ok(!coll1.equals(coll2));
 });
 
-test('sort a collection', () => {
+test('sort a collection in place', () => {
   const coll = new Collection();
   coll.set('a', 3);
   coll.set('b', 2);
   coll.set('c', 1);
   assert.deepStrictEqual(coll.array(), [3, 2, 1]);
-  const sorted = coll.sort((a, b) => a - b);
-  assert.deepStrictEqual(sorted.array(), [1, 2, 3]);
+  coll.sort((a, b) => a - b);
+  assert.deepStrictEqual(coll.array(), [1, 2, 3]);
 });
