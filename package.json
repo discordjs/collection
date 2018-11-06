@@ -5,7 +5,10 @@
   "main": "./src/index.js",
   "types": "./typings/index.d.ts",
   "scripts": {
-    "test": "echo \"Error: no test specified\" && exit 1"
+    "test": "npm run lint && npm run lint:typings && npm run unit-test",
+    "lint": "eslint ./",
+    "lint:typings": "tslint typings/index.d.ts",
+    "unit-test": "node test/index.js"
   },
   "repository": {
     "type": "git",
