@@ -26,7 +26,7 @@ declare class Collection<K, V> extends Map<K, V> {
 	public random(count: number): V[];
 	public randomKey(): K | undefined;
 	public randomKey(count: number): K[];
-	public reduce<T>(fn: (accumulator: any, value: V, key: K, collection: Collection<K, V>) => T, initialValue?: any): T;
+	public reduce<T>(fn: (accumulator: T, value: V, key: K, collection: Collection<K, V>) => T, initialValue?: T): T;
 	public some(fn: (value: V, key: K, collection: Collection<K, V>) => boolean, thisArg?: any): boolean;
 	public sort(compareFunction?: (a: V, b: V, c?: K, d?: K) => number): Collection<K, V>;
 	public sweep(fn: (value: V, key: K, collection: Collection<K, V>) => boolean, thisArg?: any): number;
