@@ -412,10 +412,7 @@ class Collection extends Map {
     if (this === collection) return true;
     if (this.size !== collection.size) return false;
     for (const [key, value] of this) {
-      if (!collection.has(key)) {
-        return false;
-      }
-      if (value !== collection.get(key)) {
+      if (!collection.has(key) || value !== collection.get(key)) {
         return false;
       }
     }
