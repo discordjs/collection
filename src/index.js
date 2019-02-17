@@ -334,7 +334,7 @@ class Collection extends Map {
         accumulator = fn(accumulator, val, key, this);
       }
 
-      // No item iterated.
+      // No items iterated.
       if (first) {
         throw new TypeError('Reduce of empty collection with no initial value');
       }
