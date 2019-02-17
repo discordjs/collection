@@ -136,6 +136,15 @@ test('map items in a collection into an array', () => {
   assert.deepStrictEqual(mapped, [2, 3, 4]);
 });
 
+test('map items in a collection into a collection', () => {
+  const coll = new Collection();
+  coll.set('a', 1);
+  coll.set('b', 2);
+  coll.set('c', 3);
+  const mapped = coll.mapValues(x => x + 1);
+  assert.deepStrictEqual(mapped.array(), [2, 3, 4]);
+});
+
 test('check if some items pass a predicate', () => {
   const coll = new Collection();
   coll.set('a', 1);
@@ -168,6 +177,11 @@ test('reduce collection into a single value without initial value', () => {
   coll.set('c', 3);
   const sum = coll.reduce((a, x) => a + x);
   assert.strictEqual(sum, 6);
+});
+
+test('reduce empty collection without initial value', () => {
+  const coll = new Collection();
+  assert.throws(() => coll.reduce((a, x) => a + x), /^TypeError: Reduce of empty collection with no initial value$/);
 });
 
 test('iterate over each item', () => {
@@ -221,12 +235,12 @@ test('check equality of two collections', () => {
   assert.ok(!coll1.equals(coll2));
 });
 
-test('sort a collection', () => {
+test('sort a collection in place', () => {
   const coll = new Collection();
   coll.set('a', 3);
   coll.set('b', 2);
   coll.set('c', 1);
   assert.deepStrictEqual(coll.array(), [3, 2, 1]);
-  const sorted = coll.sort((a, b) => a - b);
-  assert.deepStrictEqual(sorted.array(), [1, 2, 3]);
+  coll.sort((a, b) => a - b);
+  assert.deepStrictEqual(coll.array(), [1, 2, 3]);
 });

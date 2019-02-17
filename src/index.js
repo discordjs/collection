@@ -247,7 +247,7 @@ class Collection extends Map {
   }
 
   /**
-   * Maps each item to another value. Identical in behavior to
+   * Maps each item to another value into an array. Identical in behavior to
    * [Array.map()](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Array/map).
    * @param {Function} fn Function that produces an element of the new array, taking three arguments
    * @param {*} [thisArg] Value to use as `this` when executing function
@@ -260,6 +260,21 @@ class Collection extends Map {
     let i = 0;
     for (const [key, val] of this) arr[i++] = fn(val, key, this);
     return arr;
+  }
+
+  /**
+   * Maps each item to another value into a collection. Identical in behavior to
+   * [Array.map()](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Array/map).
+   * @param {Function} fn Function that produces an element of the new collection, taking three arguments
+   * @param {*} [thisArg] Value to use as `this` when executing function
+   * @returns {Array}
+   * @example collection.mapValues(user => user.tag);
+   */
+  mapValues(fn, thisArg) {
+    if (typeof thisArg !== 'undefined') fn = fn.bind(thisArg);
+    const coll = new this.constructor[Symbol.species]();
+    for (const [key, val] of this) coll.set(key, fn(val, key, this));
+    return coll;
   }
 
   /**
@@ -317,6 +332,11 @@ class Collection extends Map {
           continue;
         }
         accumulator = fn(accumulator, val, key, this);
+      }
+
+      // No items iterated.
+      if (first) {
+        throw new TypeError('Reduce of empty collection with no initial value');
       }
     }
     return accumulator;
@@ -391,10 +411,12 @@ class Collection extends Map {
     if (!collection) return false;
     if (this === collection) return true;
     if (this.size !== collection.size) return false;
-    return !this.find((value, key) => {
-      const testVal = collection.get(key);
-      return testVal !== value || (testVal === undefined && !collection.has(key));
-    });
+    for (const [key, value] of this) {
+      if (!collection.has(key) || value !== collection.get(key)) {
+        return false;
+      }
+    }
+    return true;
   }
 
   /**
@@ -407,8 +429,13 @@ class Collection extends Map {
    * @example collection.sort((userA, userB) => userA.createdTimestamp - userB.createdTimestamp);
    */
   sort(compareFunction = (x, y) => +(x > y) || +(x === y) - 1) {
-    return new this.constructor[Symbol.species]([...this.entries()]
-      .sort((a, b) => compareFunction(a[1], b[1], a[0], b[0])));
+    const entries = [...this.entries()];
+    entries.sort((a, b) => compareFunction(a[1], b[1], a[0], b[0]));
+    this.clear();
+    for (const [k, v] of entries) {
+      this.set(k, v);
+    }
+    return this;
   }
 }
 
