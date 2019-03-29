@@ -22,7 +22,7 @@ declare class Collection<K, V> extends Map<K, V> {
 	public lastKey(count: number): K[];
 	public map<T>(fn: (value: V, key: K, collection: Collection<K, V>) => T, thisArg?: any): T[];
 	public mapValues<T>(fn: (value: V, key: K, collection: Collection<K, V>) => T, thisArg?: any): Collection<K, T>;
-	public partition(fn: (value: V, key: K, collection: Collection<K, V>) => boolean): [Collection<K, V>, Collection<K, V>];
+	public partition(fn: (value: V, key: K, collection: Collection<K, V>, thisArg?: any) => boolean): [Collection<K, V>, Collection<K, V>];
 	public random(): V | undefined;
 	public random(count: number): V[];
 	public randomKey(): K | undefined;
