@@ -34,4 +34,4 @@ declare class Collection<K, V> extends Map<K, V> {
 	public tap(fn: (collection: Collection<K, V>) => void, thisArg?: any): Collection<K, V>;
 }
 
-export = Collection;
+export default Collection;
