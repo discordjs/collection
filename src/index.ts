@@ -456,7 +456,12 @@ class Collection<K, V> extends Map<K, V> {
 		}
 		return this;
 	}
+
+	public static get default(): typeof Collection {
+		return Collection;
+	}
 }
 
-module.exports = Collection;
-export default Collection;
+export = Collection as typeof Collection & {
+	default: typeof Collection;
+};
