@@ -69,6 +69,8 @@ class Collection<K, V> extends Map<K, V> {
 	 * @returns {*|Array<*>} A single value if no amount is provided or an array of values, starting from the end if
 	 * amount is negative
 	 */
+	public first(): V | undefined;
+	public first(amount: number): V[];
 	public first(amount?: number): V | V[] | undefined {
 		if (typeof amount === 'undefined') return this.values().next().value;
 		if (amount < 0) return this.last(amount * -1);
@@ -85,6 +87,8 @@ class Collection<K, V> extends Map<K, V> {
 	 * @returns {*|Array<*>} A single key if no amount is provided or an array of keys, starting from the end if
 	 * amount is negative
 	 */
+	public firstKey(): K | undefined;
+	public firstKey(amount: number): K[];
 	public firstKey(amount?: number): K | K[] | undefined {
 		if (typeof amount === 'undefined') return this.keys().next().value;
 		if (amount < 0) return this.lastKey(amount * -1);
@@ -102,6 +106,8 @@ class Collection<K, V> extends Map<K, V> {
 	 * @returns {*|Array<*>} A single value if no amount is provided or an array of values, starting from the start if
 	 * amount is negative
 	 */
+	public last(): V | undefined;
+	public last(amount: number): V[];
 	public last(amount?: number): V | V[] | undefined {
 		const arr = this.array();
 		if (typeof amount === 'undefined') return arr[arr.length - 1];
@@ -117,6 +123,8 @@ class Collection<K, V> extends Map<K, V> {
 	 * @returns {*|Array<*>} A single key if no amount is provided or an array of keys, starting from the start if
 	 * amount is negative
 	 */
+	public lastKey(): K | undefined;
+	public lastKey(amount: number): K[];
 	public lastKey(amount?: number): K | K[] | undefined {
 		const arr = this.keyArray();
 		if (typeof amount === 'undefined') return arr[arr.length - 1];
@@ -131,6 +139,8 @@ class Collection<K, V> extends Map<K, V> {
 	 * @param {number} [amount] Amount of values to obtain randomly
 	 * @returns {*|Array<*>} A single value if no amount is provided or an array of values
 	 */
+	public random(): V;
+	public random(amount: number): V[];
 	public random(amount?: number): V | V[] {
 		let arr = this.array();
 		if (typeof amount === 'undefined') return arr[Math.floor(Math.random() * arr.length)];
@@ -147,6 +157,8 @@ class Collection<K, V> extends Map<K, V> {
 	 * @param {number} [amount] Amount of keys to obtain randomly
 	 * @returns {*|Array<*>} A single key if no amount is provided or an array
 	 */
+	public randomKey(): K;
+	public randomKey(amount: number): K[];
 	public randomKey(amount?: number): K | K[] {
 		let arr = this.keyArray();
 		if (typeof amount === 'undefined') return arr[Math.floor(Math.random() * arr.length)];
@@ -185,10 +197,10 @@ class Collection<K, V> extends Map<K, V> {
 	 * @returns {*}
 	 * @example collection.findKey(user => user.username === 'Bob');
 	 */
-	public findKey(fn: (value: V, key: K, collection: this) => boolean, thisArg?: any): V | undefined {
+	public findKey(fn: (value: V, key: K, collection: this) => boolean, thisArg?: any): K | undefined {
 		if (typeof thisArg !== 'undefined') fn = fn.bind(thisArg);
 		for (const [key, val] of this) {
-			if (fn(val, key, this)) return val;
+			if (fn(val, key, this)) return key;
 		}
 		return undefined;
 	}
@@ -446,4 +458,5 @@ class Collection<K, V> extends Map<K, V> {
 	}
 }
 
-export = Collection;
+module.exports = Collection;
+export default Collection;
