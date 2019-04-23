@@ -269,7 +269,7 @@ class Collection<K, V> extends Map<K, V> {
 	 * @returns {Array}
 	 * @example collection.map(user => user.tag);
 	 */
-	public map<T extends any>(fn: (value: V, key: K, collection: this) => T, thisArg?: any): T[] {
+	public map<T>(fn: (value: V, key: K, collection: this) => T, thisArg?: any): T[] {
 		if (typeof thisArg !== 'undefined') fn = fn.bind(thisArg);
 		const arr: T[] = Array.from({ length: this.size });
 		let i = 0;
@@ -285,7 +285,7 @@ class Collection<K, V> extends Map<K, V> {
 	 * @returns {Collection}
 	 * @example collection.mapValues(user => user.tag);
 	 */
-	public mapValues<T extends any>(fn: (value: V, key: K, collection: this) => T, thisArg?: any): Collection<K, T> {
+	public mapValues<T>(fn: (value: V, key: K, collection: this) => T, thisArg?: any): Collection<K, T> {
 		if (typeof thisArg !== 'undefined') fn = fn.bind(thisArg);
 		// @ts-ignore
 		const coll = new this.constructor[Symbol.species]();
@@ -334,7 +334,7 @@ class Collection<K, V> extends Map<K, V> {
 	 * @returns {*}
 	 * @example collection.reduce((acc, guild) => acc + guild.memberCount, 0);
 	 */
-	public reduce<T extends any>(fn: (accumulator: any, value: V, key: K, collection: this) => T, initialValue?: T): T {
+	public reduce<T>(fn: (accumulator: any, value: V, key: K, collection: this) => T, initialValue?: T): T {
 		let accumulator!: T;
 
 		if (typeof initialValue !== 'undefined') {
