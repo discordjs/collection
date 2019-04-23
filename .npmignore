@@ -15,5 +15,6 @@ src/
 .travis.yml
 .github/
 test/
+jsdoc.json
 tsconfig.json
 tslint.json
