@@ -6,3 +6,4 @@ package-lock.json
 # Miscellaneous
 .tmp/
 .vscode/
+dist/

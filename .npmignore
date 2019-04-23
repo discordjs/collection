@@ -7,6 +7,8 @@ yarn.lock
 .vscode/
 
 # NPM ignore
+!dist/
+src/
 .eslintrc.json
 .gitattributes
 .gitignore
