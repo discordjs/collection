@@ -373,7 +373,7 @@ class Collection<K, V> extends Map<K, V> {
 	 *  .filter(user => user.bot)
 	 *  .each(user => console.log(user.username));
 	 */
-	public each(fn: (value: V, key: K, collection: Map<K, V>) => void, thisArg?: any): this {
+	public each(fn: (value: V, key: K, collection: Map<K, V>) => any, thisArg?: any): this {
 		this.forEach(fn, thisArg);
 		return this;
 	}
@@ -389,7 +389,7 @@ class Collection<K, V> extends Map<K, V> {
 	 *  .filter(user => user.bot)
 	 *  .tap(coll => console.log(coll.size))
 	 */
-	public tap(fn: (collection: this) => void, thisArg?: any): this {
+	public tap(fn: (collection: this) => any, thisArg?: any): this {
 		if (typeof thisArg !== 'undefined') fn = fn.bind(thisArg);
 		fn(this);
 		return this;
