@@ -7,6 +7,7 @@
 class Collection<K, V> extends Map<K, V> {
 	private _array!: V[] | null;
 	private _keyArray!: K[] | null;
+	public static readonly default: typeof Collection = Collection;
 
 	public constructor(entries?: ReadonlyArray<readonly [K, V]> | null) {
 		super(entries);
@@ -456,10 +457,6 @@ class Collection<K, V> extends Map<K, V> {
 			this.set(k, v);
 		}
 		return this;
-	}
-
-	public static get default(): typeof Collection {
-		return Collection;
 	}
 }
 
