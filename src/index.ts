@@ -77,10 +77,8 @@ class Collection<K, V> extends Map<K, V> {
 		if (typeof amount === 'undefined') return this.values().next().value;
 		if (amount < 0) return this.last(amount * -1);
 		amount = Math.min(this.size, amount);
-		const arr: V[] = Array.from({ length: amount });
 		const iter = this.values();
-		for (let i = 0; i < amount; i++) arr[i] = iter.next().value;
-		return arr;
+		return Array.from({ length: amount }, (): V => iter.next().value);
 	}
 
 	/**
@@ -95,10 +93,8 @@ class Collection<K, V> extends Map<K, V> {
 		if (typeof amount === 'undefined') return this.keys().next().value;
 		if (amount < 0) return this.lastKey(amount * -1);
 		amount = Math.min(this.size, amount);
-		const arr: K[] = Array.from({ length: amount });
 		const iter = this.keys();
-		for (let i = 0; i < amount; i++) arr[i] = iter.next().value;
-		return arr;
+		return Array.from({ length: amount }, (): K => iter.next().value);
 	}
 
 	/**
@@ -147,10 +143,8 @@ class Collection<K, V> extends Map<K, V> {
 		let arr = this.array();
 		if (typeof amount === 'undefined') return arr[Math.floor(Math.random() * arr.length)];
 		if (arr.length === 0 || !amount) return [];
-		const rand: V[] = Array.from({ length: amount });
 		arr = arr.slice();
-		for (let i = 0; i < amount; i++) rand[i] = arr.splice(Math.floor(Math.random() * arr.length), 1)[0];
-		return rand;
+		return Array.from({ length: amount }, (): V => arr.splice(Math.floor(Math.random() * arr.length), 1)[0]);
 	}
 
 	/**
@@ -273,10 +267,11 @@ class Collection<K, V> extends Map<K, V> {
 	 */
 	public map<T>(fn: (value: V, key: K, collection: this) => T, thisArg?: any): T[] {
 		if (typeof thisArg !== 'undefined') fn = fn.bind(thisArg);
-		const arr: T[] = Array.from({ length: this.size });
-		let i = 0;
-		for (const [key, val] of this) arr[i++] = fn(val, key, this);
-		return arr;
+		const iter = this.entries();
+		return Array.from({ length: this.size }, (): T => {
+			const [key, value] = iter.next().value;
+			return fn(value, key, this);
+		});
 	}
 
 	/**

@@ -244,3 +244,72 @@ test('sort a collection in place', () => {
 	coll.sort((a, b) => a - b);
 	assert.deepStrictEqual(coll.array(), [1, 2, 3]);
 });
+
+test('random select from a collection', () => {
+	const coll = new Collection();
+	const chars = 'abcdefghijklmnopqrstuvwxyz';
+	const numbers = [1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14, 15, 16, 17, 18, 19, 20, 21, 22, 23, 24, 25, 26];
+
+	for (let i = 0; i < chars.length; i++) coll.set(chars[i], numbers[i]);
+
+	const random = coll.random(5);
+	assert.ok(random.length === 5, "Random didn't return 5 elements");
+
+	const set = new Set(random);
+	assert.ok(set.size === random.length, 'Random returned the same elements X times');
+});
+
+test('random thisArg tests', () => {
+	const coll = new Collection();
+	coll.set('a', 3);
+	coll.set('b', 2);
+	coll.set('c', 1);
+
+	const object = {};
+	const string = 'Hi';
+	const boolean = false;
+	const symbol = Symbol('testArg');
+	const array = [1, 2, 3];
+
+	coll.set('d', object);
+	coll.set('e', string);
+	coll.set('f', boolean);
+	coll.set('g', symbol);
+	coll.set('h', array);
+
+	coll.some(function thisArgTest1(value) {
+		assert.deepStrictEqual(this.valueOf(), 1, 'thisArg is not the number');
+		assert.ok(this instanceof Number, 'thisArg is not a Number class');
+		return value === this;
+	}, 1);
+
+	coll.some(function thisArgTest2(value) {
+		assert.deepStrictEqual(this, object, 'thisArg is not the object');
+		assert.ok(this.constructor === Object, 'thisArg is not an Object class');
+		return value === this;
+	}, object);
+
+	coll.some(function thisArgTest3(value) {
+		assert.deepStrictEqual(this.valueOf(), string, 'thisArg is not the string');
+		assert.ok(this instanceof String, 'thisArg is not a String class');
+		return value === this;
+	}, string);
+
+	coll.some(function thisArgTest4(value) {
+		assert.deepStrictEqual(this.valueOf(), boolean, 'thisArg is not the boolean');
+		assert.ok(this instanceof Boolean, 'thisArg is not a Boolean class');
+		return value === this;
+	}, boolean);
+
+	coll.some(function thisArgTest5(value) {
+		assert.deepStrictEqual(this.valueOf(), symbol, 'thisArg is not the symbol');
+		assert.ok(this instanceof Symbol, 'thisArg is not a Symbol class');
+		return value === this;
+	}, symbol);
+
+	coll.some(function thisArgTest6(value) {
+		assert.deepStrictEqual(this, array, 'thisArg has different elements than array');
+		assert.ok(Array.isArray(this), 'thisArg is not an Array class');
+		return value === this;
+	}, array);
+});
