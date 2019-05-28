@@ -204,7 +204,7 @@ class Collection<K, V> extends Map<K, V> {
 	/**
 	 * Removes entries that satisfy the provided filter function.
 	 * @param {Function} fn Function used to test (should return a boolean)
-	 * @param {Object} [thisArg] Value to use as `this` when executing function
+	 * @param {*} [thisArg] Value to use as `this` when executing function
 	 * @returns {number} The number of removed entries
 	 */
 	public sweep(fn: (value: V, key: K, collection: this) => boolean, thisArg?: any): number {
