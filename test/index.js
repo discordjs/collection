@@ -145,6 +145,20 @@ test('map items in a collection into a collection', () => {
   assert.deepStrictEqual(mapped.array(), [2, 3, 4]);
 });
 
+test('flatMap items in a collection into a single collection', () => {
+  const coll = new Collection();
+  const coll1 = new Collection();
+  const coll2 = new Collection();
+  coll1.set('z', 1);
+  coll1.set('x', 2);
+  coll2.set('c', 3);
+  coll2.set('v', 4);
+  coll.set('a', { a: coll1 });
+  coll.set('b', { a: coll2 });
+  const mapped = coll.flatMap(x => x.a);
+  assert.deepStrictEqual(mapped.array(), [1, 2, 3, 4]);
+});
+
 test('check if some items pass a predicate', () => {
   const coll = new Collection();
   coll.set('a', 1);

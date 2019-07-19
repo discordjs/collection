@@ -263,6 +263,19 @@ class Collection extends Map {
   }
 
   /**
+   * Maps each item into a Collection, then joins the results into a single Collection. Identical in behavior to
+   * [Array.flatMap()](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Array/flatMap).
+   * @param {Function} fn Function that produces a new Collection
+   * @param {*} [thisArg] Value to use as `this` when executing function
+   * @returns {Collection}
+   * @example collection.flatMap(guild => guild.users);
+   */
+  flatMap(fn, thisArg) {
+    const collections = this.map(fn, thisArg);
+    return new this.constructor[Symbol.species]().concat(...collections);
+  }
+
+  /**
    * Maps each item to another value into a collection. Identical in behavior to
    * [Array.map()](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Array/map).
    * @param {Function} fn Function that produces an element of the new collection, taking three arguments
