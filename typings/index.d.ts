@@ -30,6 +30,7 @@ declare class Collection<K, V> extends Map<K, V> {
 	public reduce<T>(fn: (accumulator: T, value: V, key: K, collection: Collection<K, V>) => T, initialValue?: T): T;
 	public some(fn: (value: V, key: K, collection: Collection<K, V>) => boolean, thisArg?: any): boolean;
 	public sort(compareFunction?: (a: V, b: V, c?: K, d?: K) => number): Collection<K, V>;
+	public sorted(compareFunction?: (a: V, b: V, c?: K, d?: K) => number): Collection<K, V>;
 	public sweep(fn: (value: V, key: K, collection: Collection<K, V>) => boolean, thisArg?: any): number;
 	public tap(fn: (collection: Collection<K, V>) => void, thisArg?: any): Collection<K, V>;
 }
