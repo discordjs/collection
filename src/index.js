@@ -268,7 +268,7 @@ class Collection extends Map {
    * @param {Function} fn Function that produces a new Collection
    * @param {*} [thisArg] Value to use as `this` when executing function
    * @returns {Collection}
-   * @example collection.flatMap(guild => guild.users);
+   * @example collection.flatMap(guild => guild.members);
    */
   flatMap(fn, thisArg) {
     const collections = this.map(fn, thisArg);
