@@ -159,10 +159,8 @@ class Collection<K, V> extends Map<K, V> {
 		let arr = this.keyArray();
 		if (typeof amount === 'undefined') return arr[Math.floor(Math.random() * arr.length)];
 		if (arr.length === 0 || !amount) return [];
-		const rand: K[] = Array.from({ length: amount });
 		arr = arr.slice();
-		for (let i = 0; i < amount; i++) rand[i] = arr.splice(Math.floor(Math.random() * arr.length), 1)[0];
-		return rand;
+		return Array.from({ length: amount }, (): K => arr.splice(Math.floor(Math.random() * arr.length), 1)[0]);
 	}
 
 	/**
