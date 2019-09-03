@@ -5,9 +5,11 @@
   "main": "dist/index.js",
   "types": "dist/index.d.ts",
   "scripts": {
-    "test": "npm run lint && npx tsc && npm run unit-test",
     "lint": "eslint src --ext .ts",
-    "unit-test": "node test/index.js"
+    "prebuild": "npm run lint",
+    "build": "rimraf dist/ && tsc",
+    "pretest": "npm run build",
+    "test": "node test/index.js"
   },
   "repository": {
     "type": "git",
@@ -25,11 +27,12 @@
   },
   "homepage": "https://github.com/discordjs/collection#readme",
   "devDependencies": {
-    "@types/node": "^10.14.5",
-    "@typescript-eslint/eslint-plugin": "^1.7.0",
-    "@typescript-eslint/parser": "^1.7.0",
-    "eslint": "^5.16.0",
-    "eslint-config-marine": "^2.0.0",
-    "typescript": "^3.4.5"
+    "@types/node": "^10.14.17",
+    "@typescript-eslint/eslint-plugin": "^2.1.0",
+    "@typescript-eslint/parser": "^2.1.0",
+    "eslint": "^6.3.0",
+    "eslint-config-marine": "^4.2.0",
+    "rimraf": "^3.0.0",
+    "typescript": "^3.6.2"
   }
 }
