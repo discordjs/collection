@@ -6,9 +6,7 @@
 		"module": "commonjs",
 		"moduleResolution": "node",
 		"noEmitOnError": true,
-		"noImplicitAny": true,
 		"noImplicitReturns": true,
-		"noImplicitThis": true,
 		"noUnusedLocals": true,
 		"noUnusedParameters": true,
 		"outDir": "./dist",
@@ -17,9 +15,6 @@
 		"resolveJsonModule": true,
 		"sourceMap": false,
 		"strict": true,
-		"strictBindCallApply": true,
-		"strictNullChecks": true,
-		"strictPropertyInitialization": true,
 		"target": "esnext"
 	},
 	"include": [
