@@ -1,3 +1,11 @@
+interface CollectionConstructor {
+	new(): Collection<any, any>;
+	new<K, V>(entries?: ReadonlyArray<readonly [K, V]> | null): Collection<K, V>;
+	new <K, V>(iterable: Iterable<readonly [K, V]>): Collection<K, V>;
+	readonly prototype: Collection<any, any>;
+	readonly [Symbol.species]: CollectionConstructor;
+}
+
 /**
  * A Map with additional utility methods. This is used throughout discord.js rather than Arrays for anything that has
  * an ID, for significantly improved performance and ease-of-use.
@@ -7,6 +15,7 @@ class Collection<K, V> extends Map<K, V> {
 	private _array!: V[] | null;
 	private _keyArray!: K[] | null;
 	public static readonly default: typeof Collection = Collection;
+	public ['constructor']: typeof Collection;
 
 	public constructor(entries?: ReadonlyArray<readonly [K, V]> | null) {
 		super(entries);
@@ -232,8 +241,7 @@ class Collection<K, V> extends Map<K, V> {
 	public filter<T>(fn: (this: T, value: V, key: K, collection: this) => boolean, thisArg: T): Collection<K, V>;
 	public filter(fn: (value: V, key: K, collection: this) => boolean, thisArg?: unknown): Collection<K, V> {
 		if (typeof thisArg !== 'undefined') fn = fn.bind(thisArg);
-		// @ts-ignore
-		const results = new this.constructor[Symbol.species]();
+		const results = new this.constructor[Symbol.species]<K, V>();
 		for (const [key, val] of this) {
 			if (fn(val, key, this)) results.set(key, val);
 		}
@@ -252,7 +260,6 @@ class Collection<K, V> extends Map<K, V> {
 	public partition<T>(fn: (this: T, value: V, key: K, collection: this) => boolean, thisArg: T): [Collection<K, V>, Collection<K, V>];
 	public partition(fn: (value: V, key: K, collection: this) => boolean, thisArg?: unknown): [Collection<K, V>, Collection<K, V>] {
 		if (typeof thisArg !== 'undefined') fn = fn.bind(thisArg);
-		// @ts-ignore
 		const results: [Collection<K, V>, Collection<K, V>] = [new this.constructor[Symbol.species](), new this.constructor[Symbol.species]()];
 		for (const [key, val] of this) {
 			if (fn(val, key, this)) {
@@ -276,8 +283,7 @@ class Collection<K, V> extends Map<K, V> {
 	public flatMap<T, This>(fn: (this: This, value: V, key: K, collection: this) => Collection<K, T>, thisArg: This): Collection<K, T>;
 	public flatMap<T>(fn: (value: V, key: K, collection: this) => Collection<K, T>, thisArg?: unknown): Collection<K, T> {
 		const collections = this.map(fn, thisArg);
-		// @ts-ignore
-		return new this.constructor[Symbol.species]().concat(...collections);
+		return new this.constructor[Symbol.species]<K, T>().concat(...collections);
 	}
 
 	/**
@@ -311,8 +317,7 @@ class Collection<K, V> extends Map<K, V> {
 	public mapValues<This, T>(fn: (this: This, value: V, key: K, collection: this) => T, thisArg: This): Collection<K, T>;
 	public mapValues<T>(fn: (value: V, key: K, collection: this) => T, thisArg?: unknown): Collection<K, T> {
 		if (typeof thisArg !== 'undefined') fn = fn.bind(thisArg);
-		// @ts-ignore
-		const coll = new this.constructor[Symbol.species]();
+		const coll = new this.constructor[Symbol.species]<K, T>();
 		for (const [key, val] of this) coll.set(key, fn(val, key, this));
 		return coll;
 	}
@@ -433,7 +438,6 @@ class Collection<K, V> extends Map<K, V> {
 	 * @example const newColl = someColl.clone();
 	 */
 	public clone(): Collection<K, V> {
-		// @ts-ignore
 		return new this.constructor[Symbol.species](this);
 	}
 
@@ -499,9 +503,12 @@ class Collection<K, V> extends Map<K, V> {
    * @example collection.sorted((userA, userB) => userA.createdTimestamp - userB.createdTimestamp);
    */
 	public sorted(compareFunction: (firstValue: V, secondValue: V, firstKey: K, secondKey: K) => number = (x, y): number => Number(x > y) || Number(x === y) - 1): Collection<K, V> {
-		// @ts-ignore
 		return new this.constructor[Symbol.species]([...this.entries()]
 			.sort((a, b) => compareFunction(a[1], b[1], a[0], b[0])));
+	}
+
+	public static get [Symbol.species](): CollectionConstructor {
+		return Collection as unknown as CollectionConstructor;
 	}
 }
 
