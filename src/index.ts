@@ -386,10 +386,10 @@ class Collection<K, V> extends Map<K, V> {
 	 *  .filter(user => user.bot)
 	 *  .each(user => console.log(user.username));
 	 */
-	public each(fn: (value: V, key: K, collection: Map<K, V>) => void): this;
-	public each<T>(fn: (this: T, value: V, key: K, collection: Map<K, V>) => void, thisArg: T): this;
-	public each(fn: (value: V, key: K, collection: Map<K, V>) => void, thisArg?: unknown): this {
-		this.forEach(fn, thisArg);
+	public each(fn: (value: V, key: K, collection: this) => void): this;
+	public each<T>(fn: (this: T, value: V, key: K, collection: this) => void, thisArg: T): this;
+	public each(fn: (value: V, key: K, collection: this) => void, thisArg?: unknown): this {
+		this.forEach(fn as (value: V, key: K, map: Map<K, V>) => void, thisArg);
 		return this;
 	}
 
