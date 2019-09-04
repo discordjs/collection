@@ -1,8 +1,8 @@
 interface CollectionConstructor {
-	new(): Collection<any, any>;
+	new(): Collection<unknown, unknown>;
 	new<K, V>(entries?: ReadonlyArray<readonly [K, V]> | null): Collection<K, V>;
 	new <K, V>(iterable: Iterable<readonly [K, V]>): Collection<K, V>;
-	readonly prototype: Collection<any, any>;
+	readonly prototype: Collection<unknown, unknown>;
 	readonly [Symbol.species]: CollectionConstructor;
 }
 
