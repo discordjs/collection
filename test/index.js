@@ -273,6 +273,17 @@ test('random select from a collection', () => {
 	assert.ok(set.size === random.length, 'Random returned the same elements X times');
 });
 
+test('sort a collection', () => {
+  const coll = new Collection();
+  coll.set('a', 3);
+  coll.set('b', 2);
+  coll.set('c', 1);
+  assert.deepStrictEqual(coll.array(), [3, 2, 1]);
+  const sorted = coll.sorted((a, b) => a - b);
+  assert.deepStrictEqual(coll.array(), [3, 2, 1]);
+  assert.deepStrictEqual(sorted.array(), [1, 2, 3]);
+});
+
 test('random thisArg tests', () => {
 	const coll = new Collection();
 	coll.set('a', 3);

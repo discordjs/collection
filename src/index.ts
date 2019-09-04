@@ -270,8 +270,7 @@ class Collection<K, V> extends Map<K, V> {
 	 * @param {Function} fn Function that produces a new Collection
 	 * @param {*} [thisArg] Value to use as `this` when executing function
 	 * @returns {Collection}
-	 * @example
-	 * collection.flatMap(guild => guild.members);
+	 * @example collection.flatMap(guild => guild.members);
 	 */
 	public flatMap<T>(fn: (value: V, key: K, collection: this) => Collection<K, T>): Collection<K, T>;
 	public flatMap<T, This>(fn: (this: This, value: V, key: K, collection: this) => Collection<K, T>, thisArg: This): Collection<K, T>;
@@ -472,7 +471,7 @@ class Collection<K, V> extends Map<K, V> {
 	}
 
 	/**
-	 * The sort() method sorts the elements of a collection and returns it.
+	 * The sort method sorts the elements of a collection in place and returns it.
 	 * The sort is not necessarily stable. The default sort order is according to string Unicode code points.
 	 * @param {Function} [compareFunction] Specifies a function that defines the sort order.
 	 * If omitted, the collection is sorted according to each character's Unicode code point value,
@@ -488,6 +487,21 @@ class Collection<K, V> extends Map<K, V> {
 			this.set(k, v);
 		}
 		return this;
+	}
+
+	/**
+   * The sorted method sorts the elements of a collection and returns it.
+   * The sort is not necessarily stable. The default sort order is according to string Unicode code points.
+   * @param {Function} [compareFunction] Specifies a function that defines the sort order.
+   * If omitted, the collection is sorted according to each character's Unicode code point value,
+   * according to the string conversion of each element.
+   * @returns {Collection}
+   * @example collection.sorted((userA, userB) => userA.createdTimestamp - userB.createdTimestamp);
+   */
+	public sorted(compareFunction: (firstValue: V, secondValue: V, firstKey: K, secondKey: K) => number = (x, y): number => Number(x > y) || Number(x === y) - 1): Collection<K, V> {
+		// @ts-ignore
+		return new this.constructor[Symbol.species]([...this.entries()]
+			.sort((a, b) => compareFunction(a[1], b[1], a[0], b[0])));
 	}
 }
 
