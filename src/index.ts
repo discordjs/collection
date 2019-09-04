@@ -260,6 +260,7 @@ class Collection<K, V> extends Map<K, V> {
 	public partition<T>(fn: (this: T, value: V, key: K, collection: this) => boolean, thisArg: T): [Collection<K, V>, Collection<K, V>];
 	public partition(fn: (value: V, key: K, collection: this) => boolean, thisArg?: unknown): [Collection<K, V>, Collection<K, V>] {
 		if (typeof thisArg !== 'undefined') fn = fn.bind(thisArg);
+		// TODO: consider removing the <K, V> from the constructors after TS 3.7.0 is released, as it infers it
 		const results: [Collection<K, V>, Collection<K, V>] = [new this.constructor[Symbol.species]<K, V>(), new this.constructor[Symbol.species]<K, V>()];
 		for (const [key, val] of this) {
 			if (fn(val, key, this)) {
