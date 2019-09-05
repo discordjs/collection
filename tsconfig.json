@@ -1,23 +1,32 @@
 {
 	"compilerOptions": {
-		"alwaysStrict": true,
-		"declaration": true,
-		"lib": ["esnext"],
-		"module": "commonjs",
+		"strict": true,
 		"moduleResolution": "node",
+		"module": "commonjs",
+		"target": "es2019",
+		"lib": [
+			"esnext",
+			"esnext.array",
+			"esnext.asynciterable",
+			"esnext.intl",
+			"esnext.symbol"
+		],
+		"sourceMap": false,
+		"inlineSourceMap": true,
+		"inlineSources": true,
+		"sourceRoot": "/",
+		"outDir": "dist",
+		"declaration": true,
+		"removeComments": false,
+		"alwaysStrict": true,
+		"allowSyntheticDefaultImports": true,
+		"pretty": true,
 		"noEmitOnError": true,
 		"noImplicitReturns": true,
 		"noUnusedLocals": true,
-		"noUnusedParameters": true,
-		"outDir": "./dist",
-		"pretty": true,
-		"removeComments": false,
-		"resolveJsonModule": true,
-		"sourceMap": false,
-		"strict": true,
-		"target": "esnext"
+		"noUnusedParameters": true
 	},
 	"include": [
-		"src/**/*",
+		"src/**/*"
 	]
 }
