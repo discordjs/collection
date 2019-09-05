@@ -515,4 +515,4 @@ class Collection<K, V> extends Map<K, V> {
 
 export { Collection };
 export default Collection;
-
+module.exports = Collection;
