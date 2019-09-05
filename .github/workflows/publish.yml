@@ -1,0 +1,33 @@
+name: Publish
+on: [release]
+jobs:
+  npm:
+    name: npm
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@master
+
+      - name: Install Node v12
+        uses: actions/setup-node@master
+        with:
+          node-version: 12
+          registry-url: https://registry.npmjs.org/
+
+      - name: Install dependencies
+        run: npm install
+
+      - name: ESLint
+        run: npm run lint
+
+      - name: Documentation
+        run: npm run docs:test
+
+      - name: Build
+        run: npm run build
+
+      - name: Publish
+        if: github.event_name == 'release' && github.event.release.draft == 'false' && github.event.release.prerelease == 'false'
+        run: npm publish --access public
+        env:
+          NODE_AUTH_TOKEN: ${{ secrets.NPM_PUBLISH_TOKEN }}
