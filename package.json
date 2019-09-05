@@ -1,5 +1,5 @@
 {
-  "name": "collection",
+  "name": "@discordjs/collection",
   "version": "1.0.0",
   "description": "Utility data structure used in Discord.js",
   "main": "dist/index.js",
