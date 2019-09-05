@@ -9,6 +9,7 @@ yarn.lock
 # NPM ignore
 !dist/
 src/
+docs/
 .eslintrc.json
 .gitattributes
 .gitignore
