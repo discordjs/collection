@@ -1,6 +1,6 @@
 /* eslint-disable no-console, @typescript-eslint/no-var-requires */
 
-const Collection = require('..');
+const { Collection } = require('..');
 const assert = require('assert');
 function test(desc, fn) {
 	try {
