@@ -9,7 +9,9 @@
     "prebuild": "npm run lint",
     "build": "rimraf dist/ && tsc",
     "pretest": "npm run build",
-    "test": "node test/index.js"
+    "test": "node test/index.js",
+    "docs": "docgen --jsdoc jsdoc.json --source src/*.ts src/**/*.ts --custom docs/index.yml --output docs/docs.json",
+    "docs:test": "docgen --jsdoc jsdoc.json --source src/*.ts src/**/*.ts --custom docs/index.yml"
   },
   "repository": {
     "type": "git",
@@ -27,11 +29,16 @@
   },
   "homepage": "https://github.com/discordjs/collection#readme",
   "devDependencies": {
+    "@babel/cli": "^7.5.5",
+    "@babel/core": "^7.5.5",
+    "@babel/preset-env": "^7.5.5",
+    "@babel/preset-typescript": "^7.3.3",
     "@types/node": "^10.14.17",
     "@typescript-eslint/eslint-plugin": "^2.1.0",
     "@typescript-eslint/parser": "^2.1.0",
     "eslint": "^6.3.0",
     "eslint-config-marine": "^4.2.1",
+    "jsdoc-babel": "^0.5.0",
     "rimraf": "^3.0.0",
     "typescript": "^3.6.2"
   }

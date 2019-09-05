@@ -495,14 +495,14 @@ class Collection<K, V> extends Map<K, V> {
 	}
 
 	/**
-   * The sorted method sorts the elements of a collection and returns it.
-   * The sort is not necessarily stable. The default sort order is according to string Unicode code points.
-   * @param {Function} [compareFunction] Specifies a function that defines the sort order.
-   * If omitted, the collection is sorted according to each character's Unicode code point value,
-   * according to the string conversion of each element.
-   * @returns {Collection}
-   * @example collection.sorted((userA, userB) => userA.createdTimestamp - userB.createdTimestamp);
-   */
+	 * The sorted method sorts the elements of a collection and returns it.
+	 * The sort is not necessarily stable. The default sort order is according to string Unicode code points.
+	 * @param {Function} [compareFunction] Specifies a function that defines the sort order.
+	 * If omitted, the collection is sorted according to each character's Unicode code point value,
+	 * according to the string conversion of each element.
+	 * @returns {Collection}
+	 * @example collection.sorted((userA, userB) => userA.createdTimestamp - userB.createdTimestamp);
+	 */
 	public sorted(compareFunction: (firstValue: V, secondValue: V, firstKey: K, secondKey: K) => number = (x, y): number => Number(x > y) || Number(x === y) - 1): Collection<K, V> {
 		return new this.constructor[Symbol.species]([...this.entries()]
 			.sort((a, b) => compareFunction(a[1], b[1], a[0], b[0])));
@@ -513,6 +513,6 @@ class Collection<K, V> extends Map<K, V> {
 	}
 }
 
-export = Collection as typeof Collection & {
-	default: typeof Collection;
-};
+export { Collection };
+export default Collection;
+

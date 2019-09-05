@@ -1,3 +1,17 @@
 {
-	"plugins": ["node_modules/jsdoc-strip-async-await"]
+	"source": {
+		"includePattern": ".+\\.ts(doc|x)?$"
+	},
+	"plugins": [
+		"plugins/markdown",
+		"node_modules/jsdoc-babel"
+	],
+	"babel": {
+		"extensions": ["ts"],
+		"babelrc": false,
+		"presets": [
+			["@babel/preset-env", { "targets": { "node": true } }],
+			"@babel/preset-typescript"
+		]
+	}
 }
