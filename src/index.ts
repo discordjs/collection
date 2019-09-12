@@ -368,7 +368,7 @@ class Collection<K, V> extends Map<K, V> {
 	 * @returns {*}
 	 * @example collection.reduce((acc, guild) => acc + guild.memberCount, 0);
 	 */
-	public reduce<T>(fn: (accumulator: any, value: V, key: K, collection: this) => T, initialValue?: T): T {
+	public reduce<T>(fn: (accumulator: T, value: V, key: K, collection: this) => T, initialValue?: T): T {
 		let accumulator!: T;
 
 		if (typeof initialValue !== 'undefined') {
