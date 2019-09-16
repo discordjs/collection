@@ -237,11 +237,11 @@ class Collection<K, V> extends Map<K, V> {
 	 * @returns {Collection}
 	 * @example collection.filter(user => user.username === 'Bob');
 	 */
-	public filter(fn: (value: V, key: K, collection: this) => boolean): Collection<K, V>;
-	public filter<T>(fn: (this: T, value: V, key: K, collection: this) => boolean, thisArg: T): Collection<K, V>;
-	public filter(fn: (value: V, key: K, collection: this) => boolean, thisArg?: unknown): Collection<K, V> {
+	public filter(fn: (value: V, key: K, collection: this) => boolean): this;
+	public filter<T>(fn: (this: T, value: V, key: K, collection: this) => boolean, thisArg: T): this;
+	public filter(fn: (value: V, key: K, collection: this) => boolean, thisArg?: unknown): this {
 		if (typeof thisArg !== 'undefined') fn = fn.bind(thisArg);
-		const results = new this.constructor[Symbol.species]<K, V>();
+		const results = new this.constructor[Symbol.species]<K, V>() as this;
 		for (const [key, val] of this) {
 			if (fn(val, key, this)) results.set(key, val);
 		}
@@ -256,12 +256,12 @@ class Collection<K, V> extends Map<K, V> {
 	 * @returns {Collection[]}
 	 * @example const [big, small] = collection.partition(guild => guild.memberCount > 250);
 	 */
-	public partition(fn: (value: V, key: K, collection: this) => boolean): [Collection<K, V>, Collection<K, V>];
-	public partition<T>(fn: (this: T, value: V, key: K, collection: this) => boolean, thisArg: T): [Collection<K, V>, Collection<K, V>];
-	public partition(fn: (value: V, key: K, collection: this) => boolean, thisArg?: unknown): [Collection<K, V>, Collection<K, V>] {
+	public partition(fn: (value: V, key: K, collection: this) => boolean): [this, this];
+	public partition<T>(fn: (this: T, value: V, key: K, collection: this) => boolean, thisArg: T): [this, this];
+	public partition(fn: (value: V, key: K, collection: this) => boolean, thisArg?: unknown): [this, this] {
 		if (typeof thisArg !== 'undefined') fn = fn.bind(thisArg);
 		// TODO: consider removing the <K, V> from the constructors after TS 3.7.0 is released, as it infers it
-		const results: [Collection<K, V>, Collection<K, V>] = [new this.constructor[Symbol.species]<K, V>(), new this.constructor[Symbol.species]<K, V>()];
+		const results: [this, this] = [new this.constructor[Symbol.species]<K, V>() as this, new this.constructor[Symbol.species]<K, V>() as this];
 		for (const [key, val] of this) {
 			if (fn(val, key, this)) {
 				results[0].set(key, val);
@@ -284,7 +284,7 @@ class Collection<K, V> extends Map<K, V> {
 	public flatMap<T, This>(fn: (this: This, value: V, key: K, collection: this) => Collection<K, T>, thisArg: This): Collection<K, T>;
 	public flatMap<T>(fn: (value: V, key: K, collection: this) => Collection<K, T>, thisArg?: unknown): Collection<K, T> {
 		const collections = this.map(fn, thisArg);
-		return new this.constructor[Symbol.species]<K, T>().concat(...collections);
+		return (new this.constructor[Symbol.species]<K, T>() as Collection<K, T>).concat(...collections);
 	}
 
 	/**
@@ -318,7 +318,7 @@ class Collection<K, V> extends Map<K, V> {
 	public mapValues<This, T>(fn: (this: This, value: V, key: K, collection: this) => T, thisArg: This): Collection<K, T>;
 	public mapValues<T>(fn: (value: V, key: K, collection: this) => T, thisArg?: unknown): Collection<K, T> {
 		if (typeof thisArg !== 'undefined') fn = fn.bind(thisArg);
-		const coll = new this.constructor[Symbol.species]<K, T>();
+		const coll = new this.constructor[Symbol.species]<K, T>() as Collection<K, T>;
 		for (const [key, val] of this) coll.set(key, fn(val, key, this));
 		return coll;
 	}
@@ -438,8 +438,8 @@ class Collection<K, V> extends Map<K, V> {
 	 * @returns {Collection}
 	 * @example const newColl = someColl.clone();
 	 */
-	public clone(): Collection<K, V> {
-		return new this.constructor[Symbol.species](this);
+	public clone(): this {
+		return new this.constructor[Symbol.species](this) as this;
 	}
 
 	/**
@@ -448,7 +448,7 @@ class Collection<K, V> extends Map<K, V> {
 	 * @returns {Collection}
 	 * @example const newColl = someColl.concat(someOtherColl, anotherColl, ohBoyAColl);
 	 */
-	public concat(...collections: Collection<K, V>[]): Collection<K, V> {
+	public concat(...collections: Collection<K, V>[]): this {
 		const newColl = this.clone();
 		for (const coll of collections) {
 			for (const [key, val] of coll) newColl.set(key, val);
@@ -503,13 +503,9 @@ class Collection<K, V> extends Map<K, V> {
 	 * @returns {Collection}
 	 * @example collection.sorted((userA, userB) => userA.createdTimestamp - userB.createdTimestamp);
 	 */
-	public sorted(compareFunction: (firstValue: V, secondValue: V, firstKey: K, secondKey: K) => number = (x, y): number => Number(x > y) || Number(x === y) - 1): Collection<K, V> {
-		return new this.constructor[Symbol.species]([...this.entries()]
-			.sort((a, b) => compareFunction(a[1], b[1], a[0], b[0])));
-	}
-
-	public static get [Symbol.species](): CollectionConstructor {
-		return Collection as unknown as CollectionConstructor;
+	public sorted(compareFunction: (firstValue: V, secondValue: V, firstKey: K, secondKey: K) => number = (x, y): number => Number(x > y) || Number(x === y) - 1): this {
+		return (new this.constructor[Symbol.species]([...this.entries()]) as this)
+			.sort((av, bv, ak, bk) => compareFunction(av, bv, ak, bk));
 	}
 }
 
