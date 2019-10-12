@@ -487,9 +487,15 @@ class Collection<K, V> extends Map<K, V> {
 	public sort(compareFunction: (firstValue: V, secondValue: V, firstKey: K, secondKey: K) => number = (x, y): number => Number(x > y) || Number(x === y) - 1): this {
 		const entries = [...this.entries()];
 		entries.sort((a, b): number => compareFunction(a[1], b[1], a[0], b[0]));
-		this.clear();
+		
+		// Perform clean-up
+		super.clear();
+		this._array = null;
+		this._keyArray = null;
+		
+		// Set the new entries
 		for (const [k, v] of entries) {
-			this.set(k, v);
+			super.set(k, v);
 		}
 		return this;
 	}
