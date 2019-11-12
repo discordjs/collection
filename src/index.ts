@@ -21,7 +21,7 @@ class Collection<K, V> extends Map<K, V> {
 		super(entries);
 
 		/**
-		 * Cached array for the `array()` method - will be reset to `null` whenever `set()` or `delete()` are called
+		 * Cached array for the `array()` method - will be reset to `null` whenever `set()`, `delete()` or `remove()` are called
 		 * @name Collection#_array
 		 * @type {?Array}
 		 * @private
@@ -29,7 +29,7 @@ class Collection<K, V> extends Map<K, V> {
 		Object.defineProperty(this, '_array', { value: null, writable: true, configurable: true });
 
 		/**
-		 * Cached array for the `keyArray()` method - will be reset to `null` whenever `set()` or `delete()` are called
+		 * Cached array for the `keyArray()` method - will be reset to `null` whenever `set()`, `delete()` or `remove()` are called
 		 * @name Collection#_keyArray
 		 * @type {?Array}
 		 * @private
@@ -47,6 +47,15 @@ class Collection<K, V> extends Map<K, V> {
 		this._array = null;
 		this._keyArray = null;
 		return super.delete(key);
+	}
+
+	public remove(value: V): boolean {
+		for (const [key, val] of this) {
+			if (val === value) {
+				return this.delete(key);
+			}
+		}
+	return false;
 	}
 
 	/**
