@@ -501,7 +501,7 @@ class Collection<K, V> extends Map<K, V> {
 	}
 
 	/**
-	 * The intersect method returns a new structure of the elements that are contained in both structures.
+	 * The intersect method returns a new structure of the keys that are contained in both structures.
 	 * @param {Collection} other The other Collection to filter against
 	 * @returns {Collection}
 	 */
@@ -510,7 +510,7 @@ class Collection<K, V> extends Map<K, V> {
 	}
 
 	/**
-	 * The difference method returns a new structure of the elements that are contained in one structure but not the other.
+	 * The difference method returns a new structure of the keys that are contained in one structure but not the other.
 	 * @param {Collection} other The other Collection to filter against
 	 * @returns {Collection}
 	 */
