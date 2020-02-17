@@ -212,7 +212,7 @@ class Collection<K, V> extends Map<K, V> {
 	}
 
 	/**
-	 * Removes entries that satisfy the provided filter function.
+	 * Removes items that satisfy the provided filter function.
 	 * @param {Function} fn Function used to test (should return a boolean)
 	 * @param {*} [thisArg] Value to use as `this` when executing function
 	 * @returns {number} The number of removed entries
@@ -457,7 +457,7 @@ class Collection<K, V> extends Map<K, V> {
 	}
 
 	/**
-	 * Checks if this collection shares identical key-value pairings with another.
+	 * Checks if this collection shares identical items with another.
 	 * This is different to checking for equality using equal-signs, because
 	 * the collections may be different objects, but contain the same data.
 	 * @param {Collection} collection Collection to compare with
@@ -476,7 +476,7 @@ class Collection<K, V> extends Map<K, V> {
 	}
 
 	/**
-	 * The sort method sorts the elements of a collection in place and returns it.
+	 * The sort method sorts the items of a collection in place and returns it.
 	 * The sort is not necessarily stable. The default sort order is according to string Unicode code points.
 	 * @param {Function} [compareFunction] Specifies a function that defines the sort order.
 	 * If omitted, the collection is sorted according to each character's Unicode code point value,
@@ -501,7 +501,7 @@ class Collection<K, V> extends Map<K, V> {
 	}
 
 	/**
-	 * The intersect method returns a new structure of the keys and values that are contained in both structures.
+	 * The intersect method returns a new structure containing items where the keys are present in both original structures.
 	 * @param {Collection} other The other Collection to filter against
 	 * @returns {Collection}
 	 */
@@ -510,7 +510,7 @@ class Collection<K, V> extends Map<K, V> {
 	}
 
 	/**
-	 * The difference method returns a new structure of the keys and values that are contained in one structure but not the other.
+	 * The difference method returns a new structure containing items where the key is present in one of the original structures but not the other.
 	 * @param {Collection} other The other Collection to filter against
 	 * @returns {Collection}
 	 */
@@ -519,7 +519,7 @@ class Collection<K, V> extends Map<K, V> {
 	}
 
 	/**
-	 * The sorted method sorts the elements of a collection and returns it.
+	 * The sorted method sorts the items of a collection and returns it.
 	 * The sort is not necessarily stable. The default sort order is according to string Unicode code points.
 	 * @param {Function} [compareFunction] Specifies a function that defines the sort order.
 	 * If omitted, the collection is sorted according to each character's Unicode code point value,
