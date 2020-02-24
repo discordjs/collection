@@ -20,7 +20,7 @@ jobs:
         run: npm install
 
       - name: ESLint
-        run: npm run lint
+        uses: icrawl/action-eslint@v1
 
       - name: Documentation
         run: npm run docs:test
