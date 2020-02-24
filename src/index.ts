@@ -10,7 +10,7 @@ export interface CollectionConstructor {
  * A Map with additional utility methods. This is used throughout discord.js rather than Arrays for anything that has
  * an ID, for significantly improved performance and ease-of-use.
  * @extends {Map}
- * @property {number} size - The amount of elements in this collection. 
+ * @property {number} size - The amount of elements in this collection.
  */
 class Collection<K, V> extends Map<K, V> {
 	private _array!: V[] | null;
@@ -50,7 +50,7 @@ class Collection<K, V> extends Map<K, V> {
 
 	/**
 	 * Identical to [Map.set()](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Map/set).
-	 * Sets a new element in the collection with the specified key and value. 
+	 * Sets a new element in the collection with the specified key and value.
 	 * @param {*} key - The key of the element to add
 	 * @param {*} value - The value of the element to add
 	 * @returns {Collection}
@@ -63,7 +63,7 @@ class Collection<K, V> extends Map<K, V> {
 
 	/**
 	 * Identical to [Map.has()](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Map/has).
-	 * Checks if an element exists in the collection. 
+	 * Checks if an element exists in the collection.
 	 * @param {*} key - The key of the element to check for
 	 * @returns {boolean} `true` if the element exists, `false` if it does not exist.
 	 */
@@ -73,9 +73,9 @@ class Collection<K, V> extends Map<K, V> {
 
 	/**
 	 * Identical to [Map.delete()](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Map/delete).
-	 * Deletes an element from the collection. 
+	 * Deletes an element from the collection.
 	 * @param {*} key - The key to delete from the collection
-	 * @returns {boolean} `true` if the element was removed, `false` if the element does not exist. 
+	 * @returns {boolean} `true` if the element was removed, `false` if the element does not exist.
 	 */
 	public delete(key: K): boolean {
 		this._array = null;
