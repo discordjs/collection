@@ -10,6 +10,7 @@ export interface CollectionConstructor {
  * A Map with additional utility methods. This is used throughout discord.js rather than Arrays for anything that has
  * an ID, for significantly improved performance and ease-of-use.
  * @extends {Map}
+ * @property {number} size - The amount of elements in this collection. 
  */
 class Collection<K, V> extends Map<K, V> {
 	private _array!: V[] | null;
@@ -37,16 +38,58 @@ class Collection<K, V> extends Map<K, V> {
 		Object.defineProperty(this, '_keyArray', { value: null, writable: true, configurable: true });
 	}
 
+	/**
+	 * Identical to [Map.get()](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Map/get).
+	 * Gets an element with the specified key, and returns its value, or `undefined` if the element does not exist.
+	 * @param {*} key - The key to get from this collection
+	 * @returns {* | undefined}
+	 */
+	public get(key: K): V | undefined {
+		return super.get(key);
+	}
+
+	/**
+	 * Identical to [Map.set()](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Map/set).
+	 * Sets a new element in the collection with the specified key and value. 
+	 * @param {*} key - The key of the element to add
+	 * @param {*} value - The value of the element to add
+	 * @returns {Collection}
+	 */
 	public set(key: K, value: V): this {
 		this._array = null;
 		this._keyArray = null;
 		return super.set(key, value);
 	}
 
+	/**
+	 * Identical to [Map.has()](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Map/has).
+	 * Checks if an element exists in the collection. 
+	 * @param {*} key - The key of the element to check for
+	 * @returns {boolean} `true` if the element exists, `false` if it does not exist.
+	 */
+	public has(key: K): boolean {
+		return super.has(key);
+	}
+
+	/**
+	 * Identical to [Map.delete()](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Map/delete).
+	 * Deletes an element from the collection. 
+	 * @param {*} key - The key to delete from the collection
+	 * @returns {boolean} `true` if the element was removed, `false` if the element does not exist. 
+	 */
 	public delete(key: K): boolean {
 		this._array = null;
 		this._keyArray = null;
 		return super.delete(key);
+	}
+
+	/**
+	 * Identical to [Map.clear()](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Map/clear).
+	 * Removes all elements from the collection.
+	 * @returns {undefined}
+	 */
+	public clear(): void {
+		return super.clear();
 	}
 
 	/**
