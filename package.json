@@ -29,19 +29,19 @@
   },
   "homepage": "https://github.com/discordjs/collection#readme",
   "devDependencies": {
-    "@babel/cli": "^7.5.5",
-    "@babel/core": "^7.5.5",
-    "@babel/preset-env": "^7.5.5",
-    "@babel/preset-typescript": "^7.3.3",
-    "@types/node": "^10.14.17",
-    "@typescript-eslint/eslint-plugin": "^2.1.0",
-    "@typescript-eslint/parser": "^2.1.0",
+    "@babel/cli": "^7.8.4",
+    "@babel/core": "^7.8.4",
+    "@babel/preset-env": "^7.8.4",
+    "@babel/preset-typescript": "^7.8.3",
+    "@types/node": "^13.7.4",
+    "@typescript-eslint/eslint-plugin": "^2.21.0",
+    "@typescript-eslint/parser": "^2.21.0",
     "discord.js-docgen": "discordjs/docgen#ts-patch",
-    "eslint": "^6.3.0",
-    "eslint-config-marine": "^4.2.1",
+    "eslint": "^6.8.0",
+    "eslint-config-marine": "^6.0.0",
     "jsdoc-babel": "^0.5.0",
-    "rimraf": "^3.0.0",
-    "typescript": "^3.6.2"
+    "rimraf": "^3.0.2",
+    "typescript": "^3.8.2"
   },
   "eslintConfig": {
     "extends": "marine/node"
