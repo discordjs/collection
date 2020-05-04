@@ -520,7 +520,8 @@ class Collection<K, V> extends Map<K, V> {
 
 	/**
 	 * The sort method sorts the items of a collection in place and returns it.
-	 * The sort is not necessarily stable. The default sort order is according to string Unicode code points.
+	 * The sort is not necessarily stable in Node 10 or older.
+	 * The default sort order is according to string Unicode code points.
 	 * @param {Function} [compareFunction] Specifies a function that defines the sort order.
 	 * If omitted, the collection is sorted according to each character's Unicode code point value,
 	 * according to the string conversion of each element.
@@ -563,7 +564,8 @@ class Collection<K, V> extends Map<K, V> {
 
 	/**
 	 * The sorted method sorts the items of a collection and returns it.
-	 * The sort is not necessarily stable. The default sort order is according to string Unicode code points.
+	 * The sort is not necessarily stable in Node 10 or older.
+	 * The default sort order is according to string Unicode code points.
 	 * @param {Function} [compareFunction] Specifies a function that defines the sort order.
 	 * If omitted, the collection is sorted according to each character's Unicode code point value,
 	 * according to the string conversion of each element.
