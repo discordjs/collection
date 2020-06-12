@@ -321,7 +321,7 @@ class Collection<K, V> extends Map<K, V> {
 	 * @param {Function} fn Function that produces a new Collection
 	 * @param {*} [thisArg] Value to use as `this` when executing function
 	 * @returns {Collection}
-	 * @example collection.flatMap(guild => guild.members);
+	 * @example collection.flatMap(guild => guild.members.cache);
 	 */
 	public flatMap<T>(fn: (value: V, key: K, collection: this) => Collection<K, T>): Collection<K, T>;
 	public flatMap<T, This>(fn: (this: This, value: V, key: K, collection: this) => Collection<K, T>, thisArg: This): Collection<K, T>;
