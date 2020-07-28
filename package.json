@@ -1,6 +1,6 @@
 {
   "name": "@discordjs/collection",
-  "version": "0.1.5",
+  "version": "0.1.6",
   "description": "Utility data structure used in Discord.js",
   "main": "dist/index.js",
   "types": "dist/index.d.ts",
