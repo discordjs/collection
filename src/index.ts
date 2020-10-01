@@ -190,11 +190,12 @@ class Collection<K, V> extends Map<K, V> {
 	 */
 	public random(): V;
 	public random(amount: number): V[];
-	public random(amount?: number): V | V[] {
+	public random(amount?: number, includeDuplicates = true): V | V[] {
 		let arr = this.array();
 		if (typeof amount === 'undefined') return arr[Math.floor(Math.random() * arr.length)];
+		if (arr.length <= amount) return arr;
 		if (arr.length === 0 || !amount) return [];
-		arr = arr.slice();
+		arr = includeDuplicates ? arr.slice() : [...new Set(arr.slice())];
 		return Array.from({ length: amount }, (): V => arr.splice(Math.floor(Math.random() * arr.length), 1)[0]);
 	}
 
@@ -206,11 +207,12 @@ class Collection<K, V> extends Map<K, V> {
 	 */
 	public randomKey(): K;
 	public randomKey(amount: number): K[];
-	public randomKey(amount?: number): K | K[] {
+	public randomKey(amount?: number, includeDuplicates = true): K | K[] {
 		let arr = this.keyArray();
 		if (typeof amount === 'undefined') return arr[Math.floor(Math.random() * arr.length)];
+		if (arr.length <= amount) return arr;
 		if (arr.length === 0 || !amount) return [];
-		arr = arr.slice();
+		arr = includeDuplicates ? arr.slice() : [...new Set(arr.slice())];
 		return Array.from({ length: amount }, (): K => arr.splice(Math.floor(Math.random() * arr.length), 1)[0]);
 	}
 

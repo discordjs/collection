@@ -273,6 +273,15 @@ test('random select from a collection', () => {
 	assert.ok(set.size === random.length, 'Random returned the same elements X times');
 });
 
+test('random select with duplicate removal from a collection', () => {
+    const coll = new Collection();
+
+    for (const [index, char] of 'aaaaaaaaaaaaaaaaaaab'.split('').entries()) coll.set(index, char);
+
+    const random = coll.random(2, false).sort();
+    assert.ok(random.join(', ') === 'a, b', 'Random returned duplicate values');
+});
+
 test('sort a collection', () => {
   const coll = new Collection();
   coll.set('a', 3);
