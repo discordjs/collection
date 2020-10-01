@@ -207,12 +207,12 @@ class Collection<K, V> extends Map<K, V> {
 	 */
 	public randomKey(): K;
 	public randomKey(amount: number): K[];
-	public randomKey(amount?: number, includeDuplicates = true): K | K[] {
+	public randomKey(amount?: number): K | K[] {
 		let arr = this.keyArray();
 		if (typeof amount === 'undefined') return arr[Math.floor(Math.random() * arr.length)];
 		if (arr.length <= amount) return arr;
 		if (arr.length === 0 || !amount) return [];
-		arr = includeDuplicates ? arr.slice() : [...new Set(arr.slice())];
+		arr = arr.slice();
 		return Array.from({ length: amount }, (): K => arr.splice(Math.floor(Math.random() * arr.length), 1)[0]);
 	}
 
