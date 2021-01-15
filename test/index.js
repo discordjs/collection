@@ -273,6 +273,16 @@ test('random select from a collection', () => {
 	assert.ok(set.size === random.length, 'Random returned the same elements X times');
 });
 
+test('when random param > collection size', () => {
+	const coll = new Collection();
+	coll.set('a', 3);
+	coll.set('b', 2);
+	coll.set('c', 1);
+
+	const random = coll.random(5);
+	assert.ok(random.length === coll.size, "Random returned more elemants than the collection size");
+});
+
 test('sort a collection', () => {
   const coll = new Collection();
   coll.set('a', 3);
