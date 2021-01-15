@@ -1,7 +1,7 @@
 export interface CollectionConstructor {
-	new(): Collection<unknown, unknown>;
-	new<K, V>(entries?: ReadonlyArray<readonly [K, V]> | null): Collection<K, V>;
-	new<K, V>(iterable: Iterable<readonly [K, V]>): Collection<K, V>;
+	new (): Collection<unknown, unknown>;
+	new <K, V>(entries?: ReadonlyArray<readonly [K, V]> | null): Collection<K, V>;
+	new <K, V>(iterable: Iterable<readonly [K, V]>): Collection<K, V>;
 	readonly prototype: Collection<unknown, unknown>;
 	readonly [Symbol.species]: CollectionConstructor;
 }
@@ -100,7 +100,7 @@ class Collection<K, V> extends Map<K, V> {
 	 * @returns {Array}
 	 */
 	public array(): V[] {
-		if (!this._array || this._array.length !== this.size) this._array = [...this.values()];
+		if (this._array?.length !== this.size) this._array = [...this.values()];
 		return this._array;
 	}
 
@@ -112,7 +112,7 @@ class Collection<K, V> extends Map<K, V> {
 	 * @returns {Array}
 	 */
 	public keyArray(): K[] {
-		if (!this._keyArray || this._keyArray.length !== this.size) this._keyArray = [...this.keys()];
+		if (this._keyArray?.length !== this.size) this._keyArray = [...this.keys()];
 		return this._keyArray;
 	}
 
@@ -193,9 +193,12 @@ class Collection<K, V> extends Map<K, V> {
 	public random(amount?: number): V | V[] {
 		let arr = this.array();
 		if (typeof amount === 'undefined') return arr[Math.floor(Math.random() * arr.length)];
-		if (arr.length === 0 || !amount) return [];
+		if (!arr.length || !amount) return [];
 		arr = arr.slice();
-		return Array.from({ length: Math.min(amount, arr.length) }, (): V => arr.splice(Math.floor(Math.random() * arr.length), 1)[0]);
+		return Array.from(
+			{ length: Math.min(amount, arr.length) },
+			(): V => arr.splice(Math.floor(Math.random() * arr.length), 1)[0],
+		);
 	}
 
 	/**
@@ -209,9 +212,12 @@ class Collection<K, V> extends Map<K, V> {
 	public randomKey(amount?: number): K | K[] {
 		let arr = this.keyArray();
 		if (typeof amount === 'undefined') return arr[Math.floor(Math.random() * arr.length)];
-		if (arr.length === 0 || !amount) return [];
+		if (!arr.length || !amount) return [];
 		arr = arr.slice();
-		return Array.from({ length: Math.min(amount, arr.length) }, (): K => arr.splice(Math.floor(Math.random() * arr.length), 1)[0]);
+		return Array.from(
+			{ length: Math.min(amount, arr.length) },
+			(): K => arr.splice(Math.floor(Math.random() * arr.length), 1)[0],
+		);
 	}
 
 	/**
@@ -303,8 +309,10 @@ class Collection<K, V> extends Map<K, V> {
 	public partition<T>(fn: (this: T, value: V, key: K, collection: this) => boolean, thisArg: T): [this, this];
 	public partition(fn: (value: V, key: K, collection: this) => boolean, thisArg?: unknown): [this, this] {
 		if (typeof thisArg !== 'undefined') fn = fn.bind(thisArg);
-		// TODO: consider removing the <K, V> from the constructors after TS 3.7.0 is released, as it infers it
-		const results: [this, this] = [new this.constructor[Symbol.species]<K, V>() as this, new this.constructor[Symbol.species]<K, V>() as this];
+		const results: [this, this] = [
+			new this.constructor[Symbol.species]() as this,
+			new this.constructor[Symbol.species]() as this,
+		];
 		for (const [key, val] of this) {
 			if (fn(val, key, this)) {
 				results[0].set(key, val);
@@ -324,10 +332,13 @@ class Collection<K, V> extends Map<K, V> {
 	 * @example collection.flatMap(guild => guild.members.cache);
 	 */
 	public flatMap<T>(fn: (value: V, key: K, collection: this) => Collection<K, T>): Collection<K, T>;
-	public flatMap<T, This>(fn: (this: This, value: V, key: K, collection: this) => Collection<K, T>, thisArg: This): Collection<K, T>;
+	public flatMap<T, This>(
+		fn: (this: This, value: V, key: K, collection: this) => Collection<K, T>,
+		thisArg: This,
+	): Collection<K, T>;
 	public flatMap<T>(fn: (value: V, key: K, collection: this) => Collection<K, T>, thisArg?: unknown): Collection<K, T> {
 		const collections = this.map(fn, thisArg);
-		return (new this.constructor[Symbol.species]<K, T>() as Collection<K, T>).concat(...collections);
+		return (new this.constructor[Symbol.species]() as Collection<K, T>).concat(...collections);
 	}
 
 	/**
@@ -343,10 +354,13 @@ class Collection<K, V> extends Map<K, V> {
 	public map<T>(fn: (value: V, key: K, collection: this) => T, thisArg?: unknown): T[] {
 		if (typeof thisArg !== 'undefined') fn = fn.bind(thisArg);
 		const iter = this.entries();
-		return Array.from({ length: this.size }, (): T => {
-			const [key, value] = iter.next().value;
-			return fn(value, key, this);
-		});
+		return Array.from(
+			{ length: this.size },
+			(): T => {
+				const [key, value] = iter.next().value;
+				return fn(value, key, this);
+			},
+		);
 	}
 
 	/**
@@ -361,7 +375,7 @@ class Collection<K, V> extends Map<K, V> {
 	public mapValues<This, T>(fn: (this: This, value: V, key: K, collection: this) => T, thisArg: This): Collection<K, T>;
 	public mapValues<T>(fn: (value: V, key: K, collection: this) => T, thisArg?: unknown): Collection<K, T> {
 		if (typeof thisArg !== 'undefined') fn = fn.bind(thisArg);
-		const coll = new this.constructor[Symbol.species]<K, T>() as Collection<K, T>;
+		const coll = new this.constructor[Symbol.species]() as Collection<K, T>;
 		for (const [key, val] of this) coll.set(key, fn(val, key, this));
 		return coll;
 	}
@@ -422,7 +436,7 @@ class Collection<K, V> extends Map<K, V> {
 		let first = true;
 		for (const [key, val] of this) {
 			if (first) {
-				accumulator = val as unknown as T;
+				accumulator = (val as unknown) as T;
 				first = false;
 				continue;
 			}
@@ -507,7 +521,6 @@ class Collection<K, V> extends Map<K, V> {
 	 * @returns {boolean} Whether the collections have identical contents
 	 */
 	public equals(collection: Collection<K, V>): boolean {
-		if (!collection) return false;
 		if (this === collection) return true;
 		if (this.size !== collection.size) return false;
 		for (const [key, value] of this) {
@@ -528,7 +541,10 @@ class Collection<K, V> extends Map<K, V> {
 	 * @returns {Collection}
 	 * @example collection.sort((userA, userB) => userA.createdTimestamp - userB.createdTimestamp);
 	 */
-	public sort(compareFunction: (firstValue: V, secondValue: V, firstKey: K, secondKey: K) => number = (x, y): number => Number(x > y) || Number(x === y) - 1): this {
+	public sort(
+		compareFunction: (firstValue: V, secondValue: V, firstKey: K, secondKey: K) => number = (x, y): number =>
+			Number(x > y) || Number(x === y) - 1,
+	): this {
 		const entries = [...this.entries()];
 		entries.sort((a, b): number => compareFunction(a[1], b[1], a[0], b[0]));
 
@@ -572,9 +588,13 @@ class Collection<K, V> extends Map<K, V> {
 	 * @returns {Collection}
 	 * @example collection.sorted((userA, userB) => userA.createdTimestamp - userB.createdTimestamp);
 	 */
-	public sorted(compareFunction: (firstValue: V, secondValue: V, firstKey: K, secondKey: K) => number = (x, y): number => Number(x > y) || Number(x === y) - 1): this {
-		return (new this.constructor[Symbol.species]([...this.entries()]) as this)
-			.sort((av, bv, ak, bk) => compareFunction(av, bv, ak, bk));
+	public sorted(
+		compareFunction: (firstValue: V, secondValue: V, firstKey: K, secondKey: K) => number = (x, y): number =>
+			Number(x > y) || Number(x === y) - 1,
+	): this {
+		return (new this.constructor[Symbol.species]([...this.entries()]) as this).sort((av, bv, ak, bk) =>
+			compareFunction(av, bv, ak, bk),
+		);
 	}
 }
 
