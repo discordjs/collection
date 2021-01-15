@@ -195,10 +195,7 @@ class Collection<K, V> extends Map<K, V> {
 		if (typeof amount === 'undefined') return arr[Math.floor(Math.random() * arr.length)];
 		if (!arr.length || !amount) return [];
 		arr = arr.slice();
-		return Array.from(
-			{ length: Math.min(amount, arr.length) },
-			(): V => arr.splice(Math.floor(Math.random() * arr.length), 1)[0],
-		);
+		return Array.from({ length: amount }, (): V => arr.splice(Math.floor(Math.random() * arr.length), 1)[0]);
 	}
 
 	/**
@@ -214,10 +211,7 @@ class Collection<K, V> extends Map<K, V> {
 		if (typeof amount === 'undefined') return arr[Math.floor(Math.random() * arr.length)];
 		if (!arr.length || !amount) return [];
 		arr = arr.slice();
-		return Array.from(
-			{ length: Math.min(amount, arr.length) },
-			(): K => arr.splice(Math.floor(Math.random() * arr.length), 1)[0],
-		);
+		return Array.from({ length: amount }, (): K => arr.splice(Math.floor(Math.random() * arr.length), 1)[0]);
 	}
 
 	/**

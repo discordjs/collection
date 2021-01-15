@@ -86,8 +86,14 @@ test('find an item in the collection', () => {
 	const coll = new Collection();
 	coll.set('a', 1);
 	coll.set('b', 2);
-	assert.strictEqual(coll.find(x => x === 1), 1);
-	assert.strictEqual(coll.find(x => x === 10), undefined);
+	assert.strictEqual(
+		coll.find((x) => x === 1),
+		1,
+	);
+	assert.strictEqual(
+		coll.find((x) => x === 10),
+		undefined,
+	);
 });
 
 test('sweep items from the collection', () => {
@@ -95,10 +101,10 @@ test('sweep items from the collection', () => {
 	coll.set('a', 1);
 	coll.set('b', 2);
 	coll.set('c', 3);
-	const n1 = coll.sweep(x => x === 2);
+	const n1 = coll.sweep((x) => x === 2);
 	assert.strictEqual(n1, 1);
 	assert.deepStrictEqual(coll.array(), [1, 3]);
-	const n2 = coll.sweep(x => x === 4);
+	const n2 = coll.sweep((x) => x === 4);
 	assert.strictEqual(n2, 0);
 	assert.deepStrictEqual(coll.array(), [1, 3]);
 });
@@ -108,7 +114,7 @@ test('filter items from the collection', () => {
 	coll.set('a', 1);
 	coll.set('b', 2);
 	coll.set('c', 3);
-	const filtered = coll.filter(x => x % 2 === 1);
+	const filtered = coll.filter((x) => x % 2 === 1);
 	assert.strictEqual(coll.size, 3);
 	assert.strictEqual(filtered.size, 2);
 	assert.deepStrictEqual(filtered.array(), [1, 3]);
@@ -122,7 +128,7 @@ test('partition a collection into two collections', () => {
 	coll.set('d', 4);
 	coll.set('e', 5);
 	coll.set('f', 6);
-	const [even, odd] = coll.partition(x => x % 2 === 0);
+	const [even, odd] = coll.partition((x) => x % 2 === 0);
 	assert.deepStrictEqual(even.array(), [2, 4, 6]);
 	assert.deepStrictEqual(odd.array(), [1, 3, 5]);
 });
@@ -132,7 +138,7 @@ test('map items in a collection into an array', () => {
 	coll.set('a', 1);
 	coll.set('b', 2);
 	coll.set('c', 3);
-	const mapped = coll.map(x => x + 1);
+	const mapped = coll.map((x) => x + 1);
 	assert.deepStrictEqual(mapped, [2, 3, 4]);
 });
 
@@ -141,22 +147,22 @@ test('map items in a collection into a collection', () => {
 	coll.set('a', 1);
 	coll.set('b', 2);
 	coll.set('c', 3);
-	const mapped = coll.mapValues(x => x + 1);
+	const mapped = coll.mapValues((x) => x + 1);
 	assert.deepStrictEqual(mapped.array(), [2, 3, 4]);
 });
 
 test('flatMap items in a collection into a single collection', () => {
-  const coll = new Collection();
-  const coll1 = new Collection();
-  const coll2 = new Collection();
-  coll1.set('z', 1);
-  coll1.set('x', 2);
-  coll2.set('c', 3);
-  coll2.set('v', 4);
-  coll.set('a', { a: coll1 });
-  coll.set('b', { a: coll2 });
-  const mapped = coll.flatMap(x => x.a);
-  assert.deepStrictEqual(mapped.array(), [1, 2, 3, 4]);
+	const coll = new Collection();
+	const coll1 = new Collection();
+	const coll2 = new Collection();
+	coll1.set('z', 1);
+	coll1.set('x', 2);
+	coll2.set('c', 3);
+	coll2.set('v', 4);
+	coll.set('a', { a: coll1 });
+	coll.set('b', { a: coll2 });
+	const mapped = coll.flatMap((x) => x.a);
+	assert.deepStrictEqual(mapped.array(), [1, 2, 3, 4]);
 });
 
 test('check if some items pass a predicate', () => {
@@ -164,7 +170,7 @@ test('check if some items pass a predicate', () => {
 	coll.set('a', 1);
 	coll.set('b', 2);
 	coll.set('c', 3);
-	assert.ok(coll.some(x => x === 2));
+	assert.ok(coll.some((x) => x === 2));
 });
 
 test('check if every items pass a predicate', () => {
@@ -172,7 +178,7 @@ test('check if every items pass a predicate', () => {
 	coll.set('a', 1);
 	coll.set('b', 2);
 	coll.set('c', 3);
-	assert.ok(!coll.every(x => x === 2));
+	assert.ok(!coll.every((x) => x === 2));
 });
 
 test('reduce collection into a single value with initial value', () => {
@@ -205,7 +211,11 @@ test('iterate over each item', () => {
 	coll.set('c', 3);
 	const a = [];
 	coll.each((v, k) => a.push([k, v]));
-	assert.deepStrictEqual(a, [['a', 1], ['b', 2], ['c', 3]]);
+	assert.deepStrictEqual(a, [
+		['a', 1],
+		['b', 2],
+		['c', 3],
+	]);
 });
 
 test('tap the collection', () => {
@@ -213,7 +223,7 @@ test('tap the collection', () => {
 	coll.set('a', 1);
 	coll.set('b', 2);
 	coll.set('c', 3);
-	coll.tap(c => assert.ok(c === coll));
+	coll.tap((c) => assert.ok(c === coll));
 });
 
 test('shallow clone the collection', () => {
@@ -273,25 +283,15 @@ test('random select from a collection', () => {
 	assert.ok(set.size === random.length, 'Random returned the same elements X times');
 });
 
-test('when random param > collection size', () => {
+test('sort a collection', () => {
 	const coll = new Collection();
 	coll.set('a', 3);
 	coll.set('b', 2);
 	coll.set('c', 1);
-
-	const random = coll.random(5);
-	assert.ok(random.length === coll.size, "Random returned more elemants than the collection size");
-});
-
-test('sort a collection', () => {
-  const coll = new Collection();
-  coll.set('a', 3);
-  coll.set('b', 2);
-  coll.set('c', 1);
-  assert.deepStrictEqual(coll.array(), [3, 2, 1]);
-  const sorted = coll.sorted((a, b) => a - b);
-  assert.deepStrictEqual(coll.array(), [3, 2, 1]);
-  assert.deepStrictEqual(sorted.array(), [1, 2, 3]);
+	assert.deepStrictEqual(coll.array(), [3, 2, 1]);
+	const sorted = coll.sorted((a, b) => a - b);
+	assert.deepStrictEqual(coll.array(), [3, 2, 1]);
+	assert.deepStrictEqual(sorted.array(), [1, 2, 3]);
 });
 
 test('random thisArg tests', () => {
