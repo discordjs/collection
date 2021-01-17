@@ -280,7 +280,7 @@ test('when random param > collection size', () => {
 	coll.set('c', 1);
 
 	const random = coll.random(5);
-	assert.ok(random.length === coll.size, "Random returned more elemants than the collection size");
+	assert.ok(random.length === coll.size, "Random returned more elements than the collection size");
 });
 
 test('sort a collection', () => {
