@@ -10,7 +10,7 @@
 		"prebuild": "npm run lint",
 		"build": "rimraf dist/ && tsc",
 		"pretest": "npm run build",
-		"test": "jest --verbose",
+		"test": "jest",
 		"docs": "docgen --jsdoc jsdoc.json --source src/*.ts src/**/*.ts --custom docs/index.yml --output docs/docs.json",
 		"docs:test": "docgen --jsdoc jsdoc.json --source src/*.ts src/**/*.ts --custom docs/index.yml"
 	},
