@@ -59,25 +59,7 @@
 		"lint-staged": "^10.5.3",
 		"prettier": "^2.2.1",
 		"rimraf": "^3.0.2",
-		"ts-jest": "^26.4.4",
 		"typescript": "^4.1.3"
-	},
-	"eslintConfig": {
-		"extends": "marine/prettier/node",
-		"parserOptions": {
-			"project": "./tsconfig.eslint.json"
-		},
-		"rules": {
-			"@typescript-eslint/naming-convention": 0
-		}
-	},
-	"prettier": {
-		"printWidth": 120,
-		"useTabs": true,
-		"singleQuote": true,
-		"quoteProps": "as-needed",
-		"trailingComma": "all",
-		"endOfLine": "lf"
 	},
 	"husky": {
 		"hooks": {
