@@ -272,6 +272,16 @@ test('random select from a collection', () => {
 	expect(set.size === random.length).toBeTruthy();
 });
 
+test('when random param > collection size', () => {
+	const coll = new Collection();
+	coll.set('a', 3);
+	coll.set('b', 2);
+	coll.set('c', 1);
+
+	const random = coll.random(5);
+	expect(random.length).toEqual(coll.size);
+});
+
 test('sort a collection', () => {
 	const coll: TestCollection = new Collection();
 	coll.set('a', 3);

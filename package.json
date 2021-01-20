@@ -10,7 +10,7 @@
 		"prebuild": "npm run lint",
 		"build": "rimraf dist/ && tsc",
 		"pretest": "npm run build",
-		"test": "jest --verbose",
+		"test": "jest",
 		"docs": "docgen --jsdoc jsdoc.json --source src/*.ts src/**/*.ts --custom docs/index.yml --output docs/docs.json",
 		"docs:test": "docgen --jsdoc jsdoc.json --source src/*.ts src/**/*.ts --custom docs/index.yml"
 	},
@@ -59,25 +59,7 @@
 		"lint-staged": "^10.5.3",
 		"prettier": "^2.2.1",
 		"rimraf": "^3.0.2",
-		"ts-jest": "^26.4.4",
 		"typescript": "^4.1.3"
-	},
-	"eslintConfig": {
-		"extends": "marine/prettier/node",
-		"parserOptions": {
-			"project": "./tsconfig.eslint.json"
-		},
-		"rules": {
-			"@typescript-eslint/naming-convention": 0
-		}
-	},
-	"prettier": {
-		"printWidth": 120,
-		"useTabs": true,
-		"singleQuote": true,
-		"quoteProps": "as-needed",
-		"trailingComma": "all",
-		"endOfLine": "lf"
 	},
 	"husky": {
 		"hooks": {
