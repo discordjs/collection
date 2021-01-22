@@ -44,7 +44,7 @@ class Collection<K, V> extends Map<K, V> {
 	 * @param {*} key - The key to get from this collection
 	 * @returns {* | undefined}
 	 */
-	public get(key: K): V | undefined {
+	public get<R extends V = V>(key: K): R | undefined {
 		return super.get(key);
 	}
 
