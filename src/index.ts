@@ -12,7 +12,7 @@ export interface CollectionConstructor {
  * @extends {Map}
  * @property {number} size - The amount of elements in this collection.
  */
-class Collection<K, V> extends Map<K, V> {
+export class Collection<K, V> extends Map<K, V> {
 	public static readonly default: typeof Collection = Collection;
 	public ['constructor']: typeof Collection;
 
@@ -298,13 +298,10 @@ class Collection<K, V> extends Map<K, V> {
 	public map<T>(fn: (value: V, key: K, collection: this) => T, thisArg?: unknown): T[] {
 		if (typeof thisArg !== 'undefined') fn = fn.bind(thisArg);
 		const iter = this.entries();
-		return Array.from(
-			{ length: this.size },
-			(): T => {
-				const [key, value] = iter.next().value;
-				return fn(value, key, this);
-			},
-		);
+		return Array.from({ length: this.size }, (): T => {
+			const [key, value] = iter.next().value;
+			return fn(value, key, this);
+		});
 	}
 
 	/**
@@ -380,7 +377,7 @@ class Collection<K, V> extends Map<K, V> {
 		let first = true;
 		for (const [key, val] of this) {
 			if (first) {
-				accumulator = (val as unknown) as T;
+				accumulator = val as unknown as T;
 				first = false;
 				continue;
 			}
@@ -542,5 +539,4 @@ class Collection<K, V> extends Map<K, V> {
 	}
 }
 
-export { Collection };
 export default Collection;
