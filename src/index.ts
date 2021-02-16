@@ -62,13 +62,13 @@ class Collection<K, V> extends Map<K, V> {
 	}
 
 	/**
-	 * Identical to [Map.has()](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Map/has).
-	 * Checks if an element exists in the collection.
-	 * @param {*} key - The key of the element to check for
-	 * @returns {boolean} `true` if the element exists, `false` if it does not exist.
+	 * Based on [Map.has()](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Map/has).
+	 * Checks if one or multiple elements exist in the collection.
+	 * @param {...*} keys - The keys of the elements to check for
+	 * @returns {boolean} `true` if the elements exist, `false` if they do not exist.
 	 */
-	public has(key: K): boolean {
-		return super.has(key);
+	public has(...keys: K[]): boolean {
+		return keys.every((k) => super.has(k));
 	}
 
 	/**
@@ -90,6 +90,15 @@ class Collection<K, V> extends Map<K, V> {
 	 */
 	public clear(): void {
 		return super.clear();
+	}
+
+	/**
+	 * Checks if any of the elements exist in the collection.
+	 * @param {...*} keys - The keys of the elements to check for
+	 * @returns {boolean} `true` if any of the elements exist, `false` if none exist.
+	 */
+	public any(...keys: K[]): boolean {
+		return keys.some((k) => super.has(k));
 	}
 
 	/**
