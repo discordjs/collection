@@ -17,16 +17,16 @@ test('do basic map operations', () => {
 	expect(coll.size).toStrictEqual(0);
 });
 
-test('use has() and any() with multiple elements', () => {
+test('use hasAll() and hasAny()', () => {
 	const coll: TestCollection = new Collection();
 	coll.set('a', 1);
 	coll.set('b', 2);
-	expect(coll.has('a', 'b')).toBeTruthy();
-	expect(coll.has('a', 'c')).toBeFalsy();
-	expect(coll.has('c', 'd')).toBeFalsy();
-	expect(coll.any('a', 'b')).toBeTruthy();
-	expect(coll.any('a', 'c')).toBeTruthy();
-	expect(coll.any('c', 'd')).toBeFalsy();
+	expect(coll.hasAll('a', 'b')).toBeTruthy();
+	expect(coll.hasAll('a', 'c')).toBeFalsy();
+	expect(coll.hasAll('c', 'd')).toBeFalsy();
+	expect(coll.hasAny('a', 'b')).toBeTruthy();
+	expect(coll.hasAny('a', 'c')).toBeTruthy();
+	expect(coll.hasAny('c', 'd')).toBeFalsy();
 });
 
 test('convert collection to array with caching', () => {

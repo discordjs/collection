@@ -62,13 +62,13 @@ class Collection<K, V> extends Map<K, V> {
 	}
 
 	/**
-	 * Based on [Map.has()](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Map/has).
-	 * Checks if one or multiple elements exist in the collection.
-	 * @param {...*} keys - The keys of the elements to check for
-	 * @returns {boolean} `true` if the elements exist, `false` if they do not exist.
+	 * Identical to [Map.has()](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Map/has).
+	 * Checks if an element exists in the collection.
+	 * @param {*} key - The key of the element to check for
+	 * @returns {boolean} `true` if the element exists, `false` if it does not exist.
 	 */
-	public has(...keys: K[]): boolean {
-		return keys.every((k) => super.has(k));
+	public has(key: K): boolean {
+		return super.has(key);
 	}
 
 	/**
@@ -97,7 +97,16 @@ class Collection<K, V> extends Map<K, V> {
 	 * @param {...*} keys - The keys of the elements to check for
 	 * @returns {boolean} `true` if any of the elements exist, `false` if none exist.
 	 */
-	public any(...keys: K[]): boolean {
+	public hasAll(...keys: K[]): boolean {
+		return keys.every((k) => super.has(k));
+	}
+
+	/**
+	 * Checks if all of the elements exist in the collection.
+	 * @param {...*} keys - The keys of the elements to check for
+	 * @returns {boolean} `true` if all of the elements exist, `false` if at least one does not exist.
+	 */
+	public hasAny(...keys: K[]): boolean {
 		return keys.some((k) => super.has(k));
 	}
 
