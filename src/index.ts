@@ -287,7 +287,10 @@ class Collection<K, V> extends Map<K, V> {
 	 * @example collection.filter(user => user.username === 'Bob');
 	 */
 	public filter(fn: (value: V, key: K, collection: this) => boolean): this;
-	public filter<T>(fn: (this: T, value: V, key: K, collection: this) => boolean, thisArg: T): this;
+	public filter<T extends V>(
+		fn: (value: V, key: K, collection: this) => value is T,
+		thisArg?: unknown,
+	): Collection<K, T>;
 	public filter(fn: (value: V, key: K, collection: this) => boolean, thisArg?: unknown): this {
 		if (typeof thisArg !== 'undefined') fn = fn.bind(thisArg);
 		const results = new this.constructor[Symbol.species]<K, V>() as this;
