@@ -93,18 +93,18 @@ class Collection<K, V> extends Map<K, V> {
 	}
 
 	/**
-	 * Checks if any of the elements exist in the collection.
+	 * Checks if all of the elements exist in the collection.
 	 * @param {...*} keys - The keys of the elements to check for
-	 * @returns {boolean} `true` if any of the elements exist, `false` if none exist.
+	 * @returns {boolean} `true` if all of the elements exist, `false` if at least one does not exist.
 	 */
 	public hasAll(...keys: K[]): boolean {
 		return keys.every((k) => super.has(k));
 	}
 
 	/**
-	 * Checks if all of the elements exist in the collection.
+	 * Checks if any of the elements exist in the collection.
 	 * @param {...*} keys - The keys of the elements to check for
-	 * @returns {boolean} `true` if all of the elements exist, `false` if at least one does not exist.
+	 * @returns {boolean} `true` if any of the elements exist, `false` if none exist.
 	 */
 	public hasAny(...keys: K[]): boolean {
 		return keys.some((k) => super.has(k));
