@@ -12,31 +12,9 @@ export interface CollectionConstructor {
  * @extends {Map}
  * @property {number} size - The amount of elements in this collection.
  */
-class Collection<K, V> extends Map<K, V> {
-	private _array!: V[] | null;
-	private _keyArray!: K[] | null;
+export class Collection<K, V> extends Map<K, V> {
 	public static readonly default: typeof Collection = Collection;
 	public ['constructor']: typeof Collection;
-
-	public constructor(entries?: ReadonlyArray<readonly [K, V]> | null) {
-		super(entries);
-
-		/**
-		 * Cached array for the `array()` method - will be reset to `null` whenever `set()` or `delete()` are called
-		 * @name Collection#_array
-		 * @type {?Array}
-		 * @private
-		 */
-		Object.defineProperty(this, '_array', { value: null, writable: true, configurable: true });
-
-		/**
-		 * Cached array for the `keyArray()` method - will be reset to `null` whenever `set()` or `delete()` are called
-		 * @name Collection#_keyArray
-		 * @type {?Array}
-		 * @private
-		 */
-		Object.defineProperty(this, '_keyArray', { value: null, writable: true, configurable: true });
-	}
 
 	/**
 	 * Identical to [Map.get()](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Map/get).
@@ -56,8 +34,6 @@ class Collection<K, V> extends Map<K, V> {
 	 * @returns {Collection}
 	 */
 	public set(key: K, value: V): this {
-		this._array = null;
-		this._keyArray = null;
 		return super.set(key, value);
 	}
 
@@ -78,8 +54,6 @@ class Collection<K, V> extends Map<K, V> {
 	 * @returns {boolean} `true` if the element was removed, `false` if the element does not exist.
 	 */
 	public delete(key: K): boolean {
-		this._array = null;
-		this._keyArray = null;
 		return super.delete(key);
 	}
 
@@ -108,30 +82,6 @@ class Collection<K, V> extends Map<K, V> {
 	 */
 	public hasAny(...keys: K[]): boolean {
 		return keys.some((k) => super.has(k));
-	}
-
-	/**
-	 * Creates an ordered array of the values of this collection, and caches it internally. The array will only be
-	 * reconstructed if an item is added to or removed from the collection, or if you change the length of the array
-	 * itself. If you don't want this caching behavior, use `[...collection.values()]` or
-	 * `Array.from(collection.values())` instead.
-	 * @returns {Array}
-	 */
-	public array(): V[] {
-		if (this._array?.length !== this.size) this._array = [...this.values()];
-		return this._array;
-	}
-
-	/**
-	 * Creates an ordered array of the keys of this collection, and caches it internally. The array will only be
-	 * reconstructed if an item is added to or removed from the collection, or if you change the length of the array
-	 * itself. If you don't want this caching behavior, use `[...collection.keys()]` or
-	 * `Array.from(collection.keys())` instead.
-	 * @returns {Array}
-	 */
-	public keyArray(): K[] {
-		if (this._keyArray?.length !== this.size) this._keyArray = [...this.keys()];
-		return this._keyArray;
 	}
 
 	/**
@@ -167,8 +117,7 @@ class Collection<K, V> extends Map<K, V> {
 	}
 
 	/**
-	 * Obtains the last value(s) in this collection. This relies on {@link Collection#array}, and thus the caching
-	 * mechanism applies here as well.
+	 * Obtains the last value(s) in this collection.
 	 * @param {number} [amount] Amount of values to obtain from the end
 	 * @returns {*|Array<*>} A single value if no amount is provided or an array of values, starting from the start if
 	 * amount is negative
@@ -176,7 +125,7 @@ class Collection<K, V> extends Map<K, V> {
 	public last(): V | undefined;
 	public last(amount: number): V[];
 	public last(amount?: number): V | V[] | undefined {
-		const arr = this.array();
+		const arr = [...this.values()];
 		if (typeof amount === 'undefined') return arr[arr.length - 1];
 		if (amount < 0) return this.first(amount * -1);
 		if (!amount) return [];
@@ -184,8 +133,7 @@ class Collection<K, V> extends Map<K, V> {
 	}
 
 	/**
-	 * Obtains the last key(s) in this collection. This relies on {@link Collection#keyArray}, and thus the caching
-	 * mechanism applies here as well.
+	 * Obtains the last key(s) in this collection.
 	 * @param {number} [amount] Amount of keys to obtain from the end
 	 * @returns {*|Array<*>} A single key if no amount is provided or an array of keys, starting from the start if
 	 * amount is negative
@@ -193,7 +141,7 @@ class Collection<K, V> extends Map<K, V> {
 	public lastKey(): K | undefined;
 	public lastKey(amount: number): K[];
 	public lastKey(amount?: number): K | K[] | undefined {
-		const arr = this.keyArray();
+		const arr = [...this.keys()];
 		if (typeof amount === 'undefined') return arr[arr.length - 1];
 		if (amount < 0) return this.firstKey(amount * -1);
 		if (!amount) return [];
@@ -201,18 +149,16 @@ class Collection<K, V> extends Map<K, V> {
 	}
 
 	/**
-	 * Obtains unique random value(s) from this collection. This relies on {@link Collection#array}, and thus the caching
-	 * mechanism applies here as well.
+	 * Obtains unique random value(s) from this collection.
 	 * @param {number} [amount] Amount of values to obtain randomly
 	 * @returns {*|Array<*>} A single value if no amount is provided or an array of values
 	 */
 	public random(): V;
 	public random(amount: number): V[];
 	public random(amount?: number): V | V[] {
-		let arr = this.array();
+		const arr = [...this.values()];
 		if (typeof amount === 'undefined') return arr[Math.floor(Math.random() * arr.length)];
 		if (!arr.length || !amount) return [];
-		arr = arr.slice();
 		return Array.from(
 			{ length: Math.min(amount, arr.length) },
 			(): V => arr.splice(Math.floor(Math.random() * arr.length), 1)[0],
@@ -220,18 +166,16 @@ class Collection<K, V> extends Map<K, V> {
 	}
 
 	/**
-	 * Obtains unique random key(s) from this collection. This relies on {@link Collection#keyArray}, and thus the caching
-	 * mechanism applies here as well.
+	 * Obtains unique random key(s) from this collection.
 	 * @param {number} [amount] Amount of keys to obtain randomly
 	 * @returns {*|Array<*>} A single key if no amount is provided or an array
 	 */
 	public randomKey(): K;
 	public randomKey(amount: number): K[];
 	public randomKey(amount?: number): K | K[] {
-		let arr = this.keyArray();
+		const arr = [...this.keys()];
 		if (typeof amount === 'undefined') return arr[Math.floor(Math.random() * arr.length)];
 		if (!arr.length || !amount) return [];
-		arr = arr.slice();
 		return Array.from(
 			{ length: Math.min(amount, arr.length) },
 			(): K => arr.splice(Math.floor(Math.random() * arr.length), 1)[0],
@@ -372,13 +316,10 @@ class Collection<K, V> extends Map<K, V> {
 	public map<T>(fn: (value: V, key: K, collection: this) => T, thisArg?: unknown): T[] {
 		if (typeof thisArg !== 'undefined') fn = fn.bind(thisArg);
 		const iter = this.entries();
-		return Array.from(
-			{ length: this.size },
-			(): T => {
-				const [key, value] = iter.next().value;
-				return fn(value, key, this);
-			},
-		);
+		return Array.from({ length: this.size }, (): T => {
+			const [key, value] = iter.next().value;
+			return fn(value, key, this);
+		});
 	}
 
 	/**
@@ -454,7 +395,7 @@ class Collection<K, V> extends Map<K, V> {
 		let first = true;
 		for (const [key, val] of this) {
 			if (first) {
-				accumulator = (val as unknown) as T;
+				accumulator = val as unknown as T;
 				first = false;
 				continue;
 			}
@@ -570,8 +511,6 @@ class Collection<K, V> extends Map<K, V> {
 
 		// Perform clean-up
 		super.clear();
-		this._array = null;
-		this._keyArray = null;
 
 		// Set the new entries
 		for (const [k, v] of entries) {
@@ -618,6 +557,4 @@ class Collection<K, V> extends Map<K, V> {
 	}
 }
 
-module.exports = Collection;
-export { Collection };
 export default Collection;

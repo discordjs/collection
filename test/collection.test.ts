@@ -29,20 +29,6 @@ test('use hasAll() and hasAny()', () => {
 	expect(coll.hasAny('c', 'd')).toBeFalsy();
 });
 
-test('convert collection to array with caching', () => {
-	const coll: TestCollection = new Collection();
-	coll.set('a', 1);
-	coll.set('b', 2);
-	coll.set('c', 3);
-	const array1 = coll.array();
-	expect(array1).toStrictEqual([1, 2, 3]);
-	expect(array1 === coll.array()).toBeTruthy();
-	coll.set('d', 4);
-	const array2 = coll.array();
-	expect(array2).toStrictEqual([1, 2, 3, 4]);
-	expect(array2 === coll.array()).toBeTruthy();
-});
-
 test('get the first item of the collection', () => {
 	const coll: TestCollection = new Collection();
 	coll.set('a', 1);
@@ -102,10 +88,10 @@ test('sweep items from the collection', () => {
 	coll.set('c', 3);
 	const n1 = coll.sweep((x) => x === 2);
 	expect(n1).toStrictEqual(1);
-	expect(coll.array()).toStrictEqual([1, 3]);
+	expect([...coll.values()]).toStrictEqual([1, 3]);
 	const n2 = coll.sweep((x) => x === 4);
 	expect(n2).toStrictEqual(0);
-	expect(coll.array()).toStrictEqual([1, 3]);
+	expect([...coll.values()]).toStrictEqual([1, 3]);
 });
 
 test('filter items from the collection', () => {
@@ -116,7 +102,7 @@ test('filter items from the collection', () => {
 	const filtered = coll.filter((x) => x % 2 === 1);
 	expect(coll.size).toStrictEqual(3);
 	expect(filtered.size).toStrictEqual(2);
-	expect(filtered.array()).toStrictEqual([1, 3]);
+	expect([...filtered.values()]).toStrictEqual([1, 3]);
 });
 
 test('partition a collection into two collections', () => {
@@ -128,8 +114,8 @@ test('partition a collection into two collections', () => {
 	coll.set('e', 5);
 	coll.set('f', 6);
 	const [even, odd] = coll.partition((x) => x % 2 === 0);
-	expect(even.array()).toStrictEqual([2, 4, 6]);
-	expect(odd.array()).toStrictEqual([1, 3, 5]);
+	expect([...even.values()]).toStrictEqual([2, 4, 6]);
+	expect([...odd.values()]).toStrictEqual([1, 3, 5]);
 });
 
 test('map items in a collection into an array', () => {
@@ -147,7 +133,7 @@ test('map items in a collection into a collection', () => {
 	coll.set('b', 2);
 	coll.set('c', 3);
 	const mapped = coll.mapValues((x) => x + 1);
-	expect(mapped.array()).toStrictEqual([2, 3, 4]);
+	expect([...mapped.values()]).toStrictEqual([2, 3, 4]);
 });
 
 test('flatMap items in a collection into a single collection', () => {
@@ -161,7 +147,7 @@ test('flatMap items in a collection into a single collection', () => {
 	coll.set('a', { a: coll1 });
 	coll.set('b', { a: coll2 });
 	const mapped = coll.flatMap((x) => x.a);
-	expect(mapped.array()).toStrictEqual([1, 2, 3, 4]);
+	expect([...mapped.values()]).toStrictEqual([1, 2, 3, 4]);
 });
 
 test('check if some items pass a predicate', () => {
@@ -233,7 +219,7 @@ test('shallow clone the collection', () => {
 	coll.set('b', 2);
 	coll.set('c', 3);
 	const clone = coll.clone();
-	expect(coll.array()).toStrictEqual(clone.array());
+	expect([...coll.values()]).toStrictEqual([...clone.values()]);
 });
 
 test('merge multiple collections', () => {
@@ -244,7 +230,7 @@ test('merge multiple collections', () => {
 	const coll3 = new Collection();
 	coll3.set('c', 3);
 	const merged = coll1.concat(coll2, coll3);
-	expect(merged.array()).toStrictEqual([1, 2, 3]);
+	expect([...merged.values()]).toStrictEqual([1, 2, 3]);
 	expect(coll1 !== merged).toBeTruthy();
 });
 
@@ -265,9 +251,9 @@ test('sort a collection in place', () => {
 	coll.set('a', 3);
 	coll.set('b', 2);
 	coll.set('c', 1);
-	expect(coll.array()).toStrictEqual([3, 2, 1]);
+	expect([...coll.values()]).toStrictEqual([3, 2, 1]);
 	coll.sort((a, b) => a - b);
-	expect(coll.array()).toStrictEqual([1, 2, 3]);
+	expect([...coll.values()]).toStrictEqual([1, 2, 3]);
 });
 
 test('random select from a collection', () => {
@@ -299,10 +285,10 @@ test('sort a collection', () => {
 	coll.set('a', 3);
 	coll.set('b', 2);
 	coll.set('c', 1);
-	expect(coll.array()).toStrictEqual([3, 2, 1]);
+	expect([...coll.values()]).toStrictEqual([3, 2, 1]);
 	const sorted = coll.sorted((a, b) => a - b);
-	expect(coll.array()).toStrictEqual([3, 2, 1]);
-	expect(sorted.array()).toStrictEqual([1, 2, 3]);
+	expect([...coll.values()]).toStrictEqual([3, 2, 1]);
+	expect([...sorted.values()]).toStrictEqual([1, 2, 3]);
 });
 
 describe('random thisArg tests', () => {
