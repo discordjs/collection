@@ -17,18 +17,6 @@ test('do basic map operations', () => {
 	expect(coll.size).toStrictEqual(0);
 });
 
-test('use hasAll() and hasAny()', () => {
-	const coll: TestCollection = new Collection();
-	coll.set('a', 1);
-	coll.set('b', 2);
-	expect(coll.hasAll('a', 'b')).toBeTruthy();
-	expect(coll.hasAll('a', 'c')).toBeFalsy();
-	expect(coll.hasAll('c', 'd')).toBeFalsy();
-	expect(coll.hasAny('a', 'b')).toBeTruthy();
-	expect(coll.hasAny('a', 'c')).toBeTruthy();
-	expect(coll.hasAny('c', 'd')).toBeFalsy();
-});
-
 test('get the first item of the collection', () => {
 	const coll: TestCollection = new Collection();
 	coll.set('a', 1);
@@ -289,6 +277,42 @@ test('sort a collection', () => {
 	const sorted = coll.sorted((a, b) => a - b);
 	expect([...coll.values()]).toStrictEqual([3, 2, 1]);
 	expect([...sorted.values()]).toStrictEqual([1, 2, 3]);
+});
+
+describe('hasAll() tests', () => {
+	const coll: TestCollection = new Collection();
+	coll.set('a', 1);
+	coll.set('b', 2);
+
+	test('All keys exist in the collection', () => {
+		expect(coll.hasAll('a', 'b')).toBeTruthy();
+	});
+
+	test('Some keys exist in the collection', () => {
+		expect(coll.hasAll('b', 'c')).toBeFalsy();
+	});
+
+	test('No keys exist in the collection', () => {
+		expect(coll.hasAll('c', 'd')).toBeFalsy();
+	});
+});
+
+describe('hasAny() tests', () => {
+	const coll: TestCollection = new Collection();
+	coll.set('a', 1);
+	coll.set('b', 2);
+
+	test('All keys exist in the collection', () => {
+		expect(coll.hasAny('a', 'b')).toBeTruthy();
+	});
+
+	test('Some keys exist in the collection', () => {
+		expect(coll.hasAny('b', 'c')).toBeTruthy();
+	});
+
+	test('No keys exist in the collection', () => {
+		expect(coll.hasAny('c', 'd')).toBeFalsy();
+	});
 });
 
 describe('random thisArg tests', () => {
