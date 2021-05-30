@@ -1,8 +1,8 @@
-name: Tests
+name: Testing
 on: [push, pull_request]
 jobs:
-  test:
-    name: Test
+  lint:
+    name: ESLint
     runs-on: ubuntu-latest
     steps:
       - name: Checkout repository
@@ -16,8 +16,5 @@ jobs:
       - name: Install dependencies
         run: npm install
 
-      - name: Run Jest Tests
-        run: npm run test
-
-      - name: Run Documentation Tests
-        run: npm run docs:test
+      - name: Run ESLint
+        uses: icrawl/action-eslint@v1
