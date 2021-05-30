@@ -279,6 +279,42 @@ test('sort a collection', () => {
 	expect([...sorted.values()]).toStrictEqual([1, 2, 3]);
 });
 
+describe('hasAll() tests', () => {
+	const coll: TestCollection = new Collection();
+	coll.set('a', 1);
+	coll.set('b', 2);
+
+	test('All keys exist in the collection', () => {
+		expect(coll.hasAll('a', 'b')).toBeTruthy();
+	});
+
+	test('Some keys exist in the collection', () => {
+		expect(coll.hasAll('b', 'c')).toBeFalsy();
+	});
+
+	test('No keys exist in the collection', () => {
+		expect(coll.hasAll('c', 'd')).toBeFalsy();
+	});
+});
+
+describe('hasAny() tests', () => {
+	const coll: TestCollection = new Collection();
+	coll.set('a', 1);
+	coll.set('b', 2);
+
+	test('All keys exist in the collection', () => {
+		expect(coll.hasAny('a', 'b')).toBeTruthy();
+	});
+
+	test('Some keys exist in the collection', () => {
+		expect(coll.hasAny('b', 'c')).toBeTruthy();
+	});
+
+	test('No keys exist in the collection', () => {
+		expect(coll.hasAny('c', 'd')).toBeFalsy();
+	});
+});
+
 describe('random thisArg tests', () => {
 	const coll = new Collection();
 	coll.set('a', 3);
