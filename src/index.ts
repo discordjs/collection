@@ -193,8 +193,13 @@ export class Collection<K, V> extends Map<K, V> {
 	 * @returns {*}
 	 * @example collection.find(user => user.username === 'Bob');
 	 */
+	public find<V2 extends V>(fn: (value: V, key: K, collection: this) => value is V2): V2 | undefined;
 	public find(fn: (value: V, key: K, collection: this) => boolean): V | undefined;
-	public find<T>(fn: (this: T, value: V, key: K, collection: this) => boolean, thisArg: T): V | undefined;
+	public find<This, V2 extends V>(
+		fn: (this: This, value: V, key: K, collection: this) => value is V2,
+		thisArg: This,
+	): V2 | undefined;
+	public find<This>(fn: (this: This, value: V, key: K, collection: this) => boolean, thisArg: This): V | undefined;
 	public find(fn: (value: V, key: K, collection: this) => boolean, thisArg?: unknown): V | undefined {
 		if (typeof thisArg !== 'undefined') fn = fn.bind(thisArg);
 		for (const [key, val] of this) {
@@ -212,8 +217,13 @@ export class Collection<K, V> extends Map<K, V> {
 	 * @returns {*}
 	 * @example collection.findKey(user => user.username === 'Bob');
 	 */
+	public findKey<K2 extends K>(fn: (value: V, key: K, collection: this) => key is K2): K2 | undefined;
 	public findKey(fn: (value: V, key: K, collection: this) => boolean): K | undefined;
-	public findKey<T>(fn: (this: T, value: V, key: K, collection: this) => boolean, thisArg: T): K | undefined;
+	public findKey<This, K2 extends K>(
+		fn: (this: This, value: V, key: K, collection: this) => key is K2,
+		thisArg: This,
+	): K2 | undefined;
+	public findKey<This>(fn: (this: This, value: V, key: K, collection: this) => boolean, thisArg: This): K | undefined;
 	public findKey(fn: (value: V, key: K, collection: this) => boolean, thisArg?: unknown): K | undefined {
 		if (typeof thisArg !== 'undefined') fn = fn.bind(thisArg);
 		for (const [key, val] of this) {
@@ -248,8 +258,18 @@ export class Collection<K, V> extends Map<K, V> {
 	 * @returns {Collection}
 	 * @example collection.filter(user => user.username === 'Bob');
 	 */
+	public filter<K2 extends K>(fn: (value: V, key: K, collection: this) => key is K2): Collection<K2, V>;
+	public filter<V2 extends V>(fn: (value: V, key: K, collection: this) => value is V2): Collection<K, V2>;
 	public filter(fn: (value: V, key: K, collection: this) => boolean): this;
-	public filter<T>(fn: (this: T, value: V, key: K, collection: this) => boolean, thisArg: T): this;
+	public filter<This, K2 extends K>(
+		fn: (this: This, value: V, key: K, collection: this) => key is K2,
+		thisArg: This,
+	): Collection<K2, V>;
+	public filter<This, V2 extends V>(
+		fn: (this: This, value: V, key: K, collection: this) => value is V2,
+		thisArg: This,
+	): Collection<K, V2>;
+	public filter<This>(fn: (this: This, value: V, key: K, collection: this) => boolean, thisArg: This): this;
 	public filter(fn: (value: V, key: K, collection: this) => boolean, thisArg?: unknown): this {
 		if (typeof thisArg !== 'undefined') fn = fn.bind(thisArg);
 		const results = new this.constructor[Symbol.species]<K, V>() as this;
@@ -267,13 +287,30 @@ export class Collection<K, V> extends Map<K, V> {
 	 * @returns {Collection[]}
 	 * @example const [big, small] = collection.partition(guild => guild.memberCount > 250);
 	 */
+	public partition<K2 extends K>(
+		fn: (value: V, key: K, collection: this) => key is K2,
+	): [Collection<K2, V>, Collection<Exclude<K, K2>, V>];
+	public partition<V2 extends V>(
+		fn: (value: V, key: K, collection: this) => value is V2,
+	): [Collection<K, V2>, Collection<K, Exclude<V, V2>>];
 	public partition(fn: (value: V, key: K, collection: this) => boolean): [this, this];
-	public partition<T>(fn: (this: T, value: V, key: K, collection: this) => boolean, thisArg: T): [this, this];
-	public partition(fn: (value: V, key: K, collection: this) => boolean, thisArg?: unknown): [this, this] {
+	public partition<This, K2 extends K>(
+		fn: (this: This, value: V, key: K, collection: this) => key is K2,
+		thisArg: This,
+	): [Collection<K2, V>, Collection<Exclude<K, K2>, V>];
+	public partition<This, V2 extends V>(
+		fn: (this: This, value: V, key: K, collection: this) => value is V2,
+		thisArg: This,
+	): [Collection<K, V2>, Collection<K, Exclude<V, V2>>];
+	public partition<This>(fn: (this: This, value: V, key: K, collection: this) => boolean, thisArg: This): [this, this];
+	public partition(
+		fn: (value: V, key: K, collection: this) => boolean,
+		thisArg?: unknown,
+	): [Collection<K, V>, Collection<K, V>] {
 		if (typeof thisArg !== 'undefined') fn = fn.bind(thisArg);
-		const results: [this, this] = [
-			new this.constructor[Symbol.species]() as this,
-			new this.constructor[Symbol.species]() as this,
+		const results: [Collection<K, V>, Collection<K, V>] = [
+			new this.constructor[Symbol.species]() as Collection<K, V>,
+			new this.constructor[Symbol.species]() as Collection<K, V>,
 		];
 		for (const [key, val] of this) {
 			if (fn(val, key, this)) {
@@ -365,8 +402,18 @@ export class Collection<K, V> extends Map<K, V> {
 	 * @returns {boolean}
 	 * @example collection.every(user => !user.bot);
 	 */
+	public every<K2 extends K>(fn: (value: V, key: K, collection: this) => key is K2): this is Collection<K2, V>;
+	public every<V2 extends V>(fn: (value: V, key: K, collection: this) => value is V2): this is Collection<K, V2>;
 	public every(fn: (value: V, key: K, collection: this) => boolean): boolean;
-	public every<T>(fn: (this: T, value: V, key: K, collection: this) => boolean, thisArg: T): boolean;
+	public every<This, K2 extends K>(
+		fn: (this: This, value: V, key: K, collection: this) => key is K2,
+		thisArg: This,
+	): this is Collection<K2, V>;
+	public every<This, V2 extends V>(
+		fn: (this: This, value: V, key: K, collection: this) => value is V2,
+		thisArg: This,
+	): this is Collection<K, V2>;
+	public every<This>(fn: (this: This, value: V, key: K, collection: this) => boolean, thisArg: This): boolean;
 	public every(fn: (value: V, key: K, collection: this) => boolean, thisArg?: unknown): boolean {
 		if (typeof thisArg !== 'undefined') fn = fn.bind(thisArg);
 		for (const [key, val] of this) {
