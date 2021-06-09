@@ -73,7 +73,8 @@ export class Collection<K, V> extends Map<K, V> {
 	 * @returns {*}
 	 */
 	public ensure(key: K, defaultValue: V): V {
-		if (this.has(key)) return this.get(key)!;
+		const value = this.get(key);
+		if (typeof value !== 'undefined') return value;
 		this.set(key, defaultValue);
 		return defaultValue;
 	}
