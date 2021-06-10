@@ -70,7 +70,7 @@ export class Collection<K, V> extends Map<K, V> {
 	 * Gets an element if the key exists, otherwise sets and returns {@param defaultValue}.
 	 * @param {*} key - Key to get from/set to the collection.
 	 * @param {*} defaultValue - Default value to be set and returned if the key doesn't exist.
-	 * @returns {*}
+	 * @returns {*} The existing value if any, {@param defaultValue} otherwise.
 	 */
 	public ensure(key: K, defaultValue: V): V {
 		const value = this.get(key);
