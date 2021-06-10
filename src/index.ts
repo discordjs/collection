@@ -67,7 +67,7 @@ export class Collection<K, V> extends Map<K, V> {
 	}
 
 	/**
-	 * Gets an element if the key exists, otherwise sets it to {@param defaultValue} and returns the {@param defaultValue}.
+	 * Gets an element if the key exists, otherwise sets and returns {@param defaultValue}.
 	 * @param {*} key - Key to get from/set to the collection.
 	 * @param {*} defaultValue - Default value to be set and returned if the key doesn't exist.
 	 * @returns {*}
