@@ -454,7 +454,7 @@ describe('ensure() tests', () => {
 		expect(coll.size).toStrictEqual(3);
 	});
 
-	test('ensure when key exists should not change the collection', () => {
+	test('ensure with existing key should not change the collection', () => {
 		coll.ensure('a', 4);
 		expect(coll.size).toStrictEqual(3);
 		expect(coll.get('a')).toStrictEqual(1);
