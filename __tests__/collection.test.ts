@@ -449,8 +449,9 @@ describe('ensure() tests', () => {
 
 	test('return existing value if key exists', () => {
 		const ensureB = coll.ensure('b', 3);
+		const ensuredB = ensureB();
 		const getB = coll.get('b');
-		expect(ensureB).toBe(getB);
+		expect(ensuredB).toBe(getB);
 		expect(coll.size).toStrictEqual(3);
 	});
 
