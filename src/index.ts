@@ -28,8 +28,8 @@ export class Collection<K, V> extends Map<K, V> {
 	/**
 	 * Gets an element if the key exists, otherwise sets and returns {@param defaultValue}.
 	 * @param {*} key - Key to get from/set to the collection.
-	 * @param {*} defaultValue - Default value to be set and returned if the key doesn't exist.
-	 * @returns {function} Function that lazily evaluates to the existing value if any, {@param defaultValue} otherwise.
+	 * @param {*} getDefaultValue - Function that returns the default value to be set and returned if the key doesn't exist.
+	 * @returns {*} The existing value if any, {@param getDefaultValue}'s return value otherwise.
 	 * @example <caption>Example use case: per-guild settings</caption>
 	 * // should be customized for what your bot needs
 	 * const defaultSettings = {
@@ -40,11 +40,7 @@ export class Collection<K, V> extends Map<K, V> {
 	 * }
 	 *
 	 * client.on('guildMemberAdd', member => {
-	 *   const getGuildSettings = client.settings.ensure(message.guild.id, defaultSettings);
-	 *   // ...
-	 *
-	 *   // evaluate the data when you need it
-	 *   const guildSettings = getGuildSettings();
+	 *   const getGuildSettings = client.settings.ensure(message.guild.id, () => defaultSettings);
 	 *
 	 *   // use the data
 	 *   if (guildSettings.welcomeChannelID) {
@@ -53,11 +49,12 @@ export class Collection<K, V> extends Map<K, V> {
 	 *   }
 	 * })
 	 */
-	public ensure(key: K, defaultValue: V): () => V {
+	public ensure(key: K, getDefaultValue: () => V): V {
 		const value = this.get(key);
-		if (typeof value !== 'undefined') return () => value;
+		if (typeof value !== 'undefined') return value;
+		const defaultValue = getDefaultValue();
 		this.set(key, defaultValue);
-		return () => defaultValue;
+		return defaultValue;
 	}
 
 	/**
