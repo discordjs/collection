@@ -388,21 +388,20 @@ describe('ensure() tests', () => {
 	coll.set('b', 2);
 
 	test('set new value if key does not exist', () => {
-		coll.ensure('c', 3);
+		coll.ensure('c', () => 3);
 		expect(coll.size).toStrictEqual(3);
 		expect(coll.has('c')).toBeTruthy();
 	});
 
 	test('return existing value if key exists', () => {
-		const ensureB = coll.ensure('b', 3);
-		const ensuredB = ensureB();
+		const ensureB = coll.ensure('b', () => 3);
 		const getB = coll.get('b');
-		expect(ensuredB).toBe(getB);
+		expect(ensureB).toBe(getB);
 		expect(coll.size).toStrictEqual(3);
 	});
 
 	test('ensure with existing key should not change the collection', () => {
-		coll.ensure('a', 4);
+		coll.ensure('a', () => 4);
 		expect(coll.size).toStrictEqual(3);
 		expect(coll.get('a')).toStrictEqual(1);
 	});
