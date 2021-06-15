@@ -26,9 +26,9 @@ export class Collection<K, V> extends Map<K, V> {
 	public static readonly default: typeof Collection = Collection;
 
 	/**
-	 * Gets an element if the key exists, otherwise sets and returns {@param defaultValue}.
+	 * Gets an element if the key exists, otherwise sets and returns {@param getDefaultValue}'s return value.
 	 * @param {*} key - Key to get from/set to the collection.
-	 * @param {*} getDefaultValue - Function that returns the default value to be set and returned if the key doesn't exist.
+	 * @param {function} getDefaultValue - Function that returns the default value to be set and returned if the key doesn't exist.
 	 * @returns {*} The existing value if any, {@param getDefaultValue}'s return value otherwise.
 	 * @example <caption>Example use case: per-guild settings</caption>
 	 * // should be customized for what your bot needs
@@ -50,8 +50,7 @@ export class Collection<K, V> extends Map<K, V> {
 	 * })
 	 */
 	public ensure(key: K, getDefaultValue: () => V): V {
-		const value = this.get(key);
-		if (typeof value !== 'undefined') return value;
+		if (this.has(key)) return this.get(key)!;
 		const defaultValue = getDefaultValue();
 		this.set(key, defaultValue);
 		return defaultValue;
