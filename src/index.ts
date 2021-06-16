@@ -71,24 +71,6 @@ export class Collection<K, V> extends Map<K, V> {
 	 * @param {*} key - Key to get from/set to the collection.
 	 * @param {function} getDefaultValue - Function that returns the default value to be set and returned if the key doesn't exist.
 	 * @returns {*} The existing value if any, {@param getDefaultValue}'s return value otherwise.
-	 * @example <caption>Example use case: per-guild settings</caption>
-	 * // should be customized for what your bot needs
-	 * const defaultSettings = {
-	 *   welcomeChannelID: null,
-	 *   reactionRoleMessageID: null,
-	 *   adminRoleID: null,
-	 *   muteRoleID: null
-	 * }
-	 *
-	 * client.on('guildMemberAdd', member => {
-	 *   const getGuildSettings = client.settings.ensure(message.guild.id, () => defaultSettings);
-	 *
-	 *   // use the data
-	 *   if (guildSettings.welcomeChannelID) {
-	 *     const channel = client.channels.fetch(guildSettings.welcomeChannelID);
-	 *     channel.send(`Hello <@${member.id}>, welcome to ${member.guild.name}! Enjoy your stay!`);
-	 *   }
-	 * })
 	 */
 	public ensure(key: K, getDefaultValue: () => V): V {
 		if (this.has(key)) return this.get(key)!;
