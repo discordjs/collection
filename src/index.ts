@@ -67,6 +67,19 @@ export class Collection<K, V> extends Map<K, V> {
 	}
 
 	/**
+	 * Gets an element if the key exists, otherwise sets and returns the provided default value.
+	 * @param {*} key - Key to ensure from the collection.
+	 * @param {function} getDefaultValue - Function that returns the default value to be set and returned if the key doesn't exist.
+	 * @returns {*} The existing value if any, the provided return value otherwise.
+	 */
+	public ensure(key: K, getDefaultValue: () => V): V {
+		if (this.has(key)) return this.get(key)!;
+		const defaultValue = getDefaultValue();
+		this.set(key, defaultValue);
+		return defaultValue;
+	}
+
+	/**
 	 * Checks if all of the elements exist in the collection.
 	 * @param {...*} keys - The keys of the elements to check for
 	 * @returns {boolean} `true` if all of the elements exist, `false` if at least one does not exist.
