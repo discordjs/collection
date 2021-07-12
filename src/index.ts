@@ -153,9 +153,9 @@ export class Collection<K, V> extends Map<K, V> {
 	 * @param {number} [amount] Amount of values to obtain randomly
 	 * @returns {*|Array<*>} A single value if no amount is provided or an array of values
 	 */
-	public random(): V;
+	public random(): V | undefined;
 	public random(amount: number): V[];
-	public random(amount?: number): V | V[] {
+	public random(amount?: number): V | V[] | undefined {
 		const arr = [...this.values()];
 		if (typeof amount === 'undefined') return arr[Math.floor(Math.random() * arr.length)];
 		if (!arr.length || !amount) return [];
@@ -170,9 +170,9 @@ export class Collection<K, V> extends Map<K, V> {
 	 * @param {number} [amount] Amount of keys to obtain randomly
 	 * @returns {*|Array<*>} A single key if no amount is provided or an array
 	 */
-	public randomKey(): K;
+	public randomKey(): K | undefined;
 	public randomKey(amount: number): K[];
-	public randomKey(amount?: number): K | K[] {
+	public randomKey(amount?: number): K | K[] | undefined {
 		const arr = [...this.keys()];
 		if (typeof amount === 'undefined') return arr[Math.floor(Math.random() * arr.length)];
 		if (!arr.length || !amount) return [];
