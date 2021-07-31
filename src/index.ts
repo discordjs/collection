@@ -608,10 +608,18 @@ export class Collection<K, V> extends Map<K, V> {
 	public sorted(compareFunction: Comparator<K, V> = Collection.defaultSort): Collection<K, V> {
 		return new this.constructor[Symbol.species](this).sort((av, bv, ak, bk) => compareFunction(av, bv, ak, bk));
 	}
+	
+	/**
+	 * Creates an ordered array of the values of this collection
+	 * @returns {Array}
+	 */
+	public array(): V[] {
+		return [...this.values()];
+	}
 
 	public toJSON() {
 		// toJSON is called recursively by JSON.stringify.
-		return [...this.values()];
+		return this.array();
 	}
 
 	private static defaultSort<V>(firstValue: V, secondValue: V): number {
