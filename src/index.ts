@@ -617,6 +617,14 @@ export class Collection<K, V> extends Map<K, V> {
 		return [...this.values()];
 	}
 
+	/**
+	 * Creates an ordered array of the keys of this collection.
+	 * @returns {Array}
+	 */
+	public keyArray(): K[] {
+		return [...this.keys()];
+	}
+
 	public toJSON() {
 		// toJSON is called recursively by JSON.stringify.
 		return this.array();
