@@ -155,8 +155,8 @@ export class Collection<K, V> extends Map<K, V> {
 	 * @param {number} index The index of the element to obtain
 	 * @returns {*}
 	 */
-	public at(index: number): K | undefined {
-		const arr = [...this.keys()];
+	public at(index: number): V | undefined {
+		const arr = [...this.values()];
 		if (index < 0) return arr[arr.length + index];
 		return arr[index];
 	}
