@@ -277,6 +277,28 @@ test('sort a collection', () => {
 	expect([...sorted.values()]).toStrictEqual([1, 2, 3]);
 });
 
+describe('at() tests', () => {
+	const coll: TestCollection = new Collection();
+	coll.set('a', 1);
+	coll.set('b', 2);
+
+	test('Positive index', () => {
+		expect(coll.at(0)).toStrictEqual(1);
+	});
+
+	test('Negative index', () => {
+		expect(coll.at(-1)).toStrictEqual(2);
+	});
+
+	test('Invalid positive index', () => {
+		expect(coll.at(3)).toBeUndefined();
+	});
+
+	test('Invalid negative index', () => {
+		expect(coll.at(-3)).toBeUndefined();
+	});
+});
+
 describe('hasAll() tests', () => {
 	const coll: TestCollection = new Collection();
 	coll.set('a', 1);
