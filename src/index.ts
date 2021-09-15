@@ -151,7 +151,7 @@ export class Collection<K, V> extends Map<K, V> {
 	/**
 	 * Identical to [Array.at()](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Array/at).
 	 * Returns the item at a given index, allowing for positive and negative integers.
-	 * Negative integers count back from the last item in the array.
+	 * Negative integers count back from the last item in the collection.
 	 * @param {number} index The index of the element to obtain
 	 * @returns {*}
 	 */
