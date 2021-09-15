@@ -299,6 +299,28 @@ describe('at() tests', () => {
 	});
 });
 
+describe('keyAt() tests', () => {
+	const coll: TestCollection = new Collection();
+	coll.set('a', 1);
+	coll.set('b', 2);
+
+	test('Positive index', () => {
+		expect(coll.keyAt(0)).toStrictEqual('a');
+	});
+
+	test('Negative index', () => {
+		expect(coll.keyAt(-1)).toStrictEqual('b');
+	});
+
+	test('Invalid positive index', () => {
+		expect(coll.keyAt(3)).toBeUndefined();
+	});
+
+	test('Invalid negative index', () => {
+		expect(coll.keyAt(-3)).toBeUndefined();
+	});
+});
+
 describe('hasAll() tests', () => {
 	const coll: TestCollection = new Collection();
 	coll.set('a', 1);

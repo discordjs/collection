@@ -162,6 +162,19 @@ export class Collection<K, V> extends Map<K, V> {
 	}
 
 	/**
+	 * Identical to [Array.at()](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Array/at).
+	 * Returns the key at a given index, allowing for positive and negative integers.
+	 * Negative integers count back from the last item in the collection.
+	 * @param {number} index The index of the key to obtain
+	 * @returns {*}
+	 */
+	public keyAt(index: number): K | undefined {
+		const arr = [...this.keys()];
+		if (index < 0) return arr[arr.length + index];
+		return arr[index];
+	}
+
+	/**
 	 * Obtains unique random value(s) from this collection.
 	 * @param {number} [amount] Amount of values to obtain randomly
 	 * @returns {*|Array<*>} A single value if no amount is provided or an array of values
