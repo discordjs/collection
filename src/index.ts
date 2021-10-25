@@ -183,6 +183,18 @@ export class Collection<K, V> extends Map<K, V> {
 	}
 
 	/**
+	 * Identical to [Array.reverse()](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Array/reverse)
+	 * but returns a Collection instead of an Array.
+	 * @returns {Collection}
+	 */
+	public reverse(): this {
+		const entries = [...this.entries()].reverse();
+		this.clear();
+		for (const [key, value] of entries) this.set(key, value);
+		return this;
+	}
+
+	/**
 	 * Searches for a single item where the given function returns a truthy value. This behaves like
 	 * [Array.find()](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Array/find).
 	 * <warn>All collections used in Discord.js are mapped using their `id` property, and if you want to find by id you
