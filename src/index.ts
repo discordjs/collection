@@ -169,6 +169,7 @@ export class Collection<K, V> extends Map<K, V> {
 	 * @returns {*}
 	 */
 	public keyAt(index: number): K | undefined {
+		index = Math.floor(index);
 		const arr = [...this.keys()];
 		if (index < 0) return arr[arr.length + index];
 		return arr[index];
