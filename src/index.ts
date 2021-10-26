@@ -152,10 +152,10 @@ export class Collection<K, V> extends Map<K, V> {
 	 * Identical to [Array.at()](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Array/at).
 	 * Returns the item at a given index, allowing for positive and negative integers.
 	 * Negative integers count back from the last item in the collection.
-	 * @param {number} index The index of the element to obtain
+	 * @param {number} [index=0] The index of the element to obtain
 	 * @returns {*}
 	 */
-	public at(index: number): V | undefined {
+	public at(index = 0): V | undefined {
 		index = Math.floor(index);
 		const arr = [...this.values()];
 		if (index < 0) return arr[arr.length + index];
@@ -166,10 +166,10 @@ export class Collection<K, V> extends Map<K, V> {
 	 * Identical to [Array.at()](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Array/at).
 	 * Returns the key at a given index, allowing for positive and negative integers.
 	 * Negative integers count back from the last item in the collection.
-	 * @param {number} index The index of the key to obtain
+	 * @param {number} [index=0] The index of the key to obtain
 	 * @returns {*}
 	 */
-	public keyAt(index: number): K | undefined {
+	public keyAt(index = 0): K | undefined {
 		index = Math.floor(index);
 		const arr = [...this.keys()];
 		if (index < 0) return arr[arr.length + index];

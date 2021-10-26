@@ -282,6 +282,10 @@ describe('at() tests', () => {
 	coll.set('a', 1);
 	coll.set('b', 2);
 
+	test('No index', () => {
+		expect(coll.at()).toStrictEqual(1);
+	});
+
 	test('Positive index', () => {
 		expect(coll.at(0)).toStrictEqual(1);
 	});
@@ -303,6 +307,10 @@ describe('keyAt() tests', () => {
 	const coll: TestCollection = new Collection();
 	coll.set('a', 1);
 	coll.set('b', 2);
+
+	test('No index', () => {
+		expect(coll.keyAt()).toStrictEqual('a');
+	});
 
 	test('Positive index', () => {
 		expect(coll.keyAt(0)).toStrictEqual('a');
