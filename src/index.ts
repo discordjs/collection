@@ -158,8 +158,7 @@ export class Collection<K, V> extends Map<K, V> {
 	public at(index = 0): V | undefined {
 		index = Math.floor(index);
 		const arr = [...this.values()];
-		if (index < 0) return arr[arr.length + index];
-		return arr[index];
+		return arr.at(index);
 	}
 
 	/**
@@ -172,8 +171,7 @@ export class Collection<K, V> extends Map<K, V> {
 	public keyAt(index = 0): K | undefined {
 		index = Math.floor(index);
 		const arr = [...this.keys()];
-		if (index < 0) return arr[arr.length + index];
-		return arr[index];
+		return arr.at(index);
 	}
 
 	/**
