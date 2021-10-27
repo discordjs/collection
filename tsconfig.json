@@ -37,7 +37,8 @@
 		"experimentalDecorators": true,
 		"lib": ["ESNext"],
 		"target": "ES2020",
-		"useDefineForClassFields": true,
+		// if true: causes Collection.constructor to be undefined
+		"useDefineForClassFields": false,
 
 		// Completeness
 		"skipLibCheck": true
