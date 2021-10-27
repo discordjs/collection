@@ -14,6 +14,7 @@
 		"prepare": "is-ci || husky install",
 		"docs": "docgen --jsdoc jsdoc.json --source src/*.ts src/**/*.ts --custom docs/index.yml --output docs/docs.json",
 		"docs:test": "docgen --jsdoc jsdoc.json --source src/*.ts src/**/*.ts --custom docs/index.yml",
+		"prepublishOnly": "npm run lint && npm run test",
 		"release": "standard-version --preset angular"
 	},
 	"main": "./dist/index.js",
