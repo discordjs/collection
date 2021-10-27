@@ -3,5 +3,15 @@
 	"compilerOptions": {
 		"allowJs": true
 	},
-	"include": ["**/*.ts", "**/*.js", "**/*.test.ts", "**/*.test.js", "**/*.spec.ts", "**/*.spec.js"]
+	"include": [
+		"**/*.ts",
+		"**/*.tsx",
+		"**/*.js",
+		"**/*.jsx",
+		"**/*.test.ts",
+		"**/*.test.js",
+		"**/*.spec.ts",
+		"**/*.spec.js"
+	],
+	"exclude": []
 }

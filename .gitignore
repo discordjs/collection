@@ -1,10 +1,25 @@
 # Packages
 node_modules/
-yarn.lock
-package-lock.json
+
+# Log files
+logs/
+*.log
+npm-debug.log*
+
+# Runtime data
+pids
+*.pid
+*.seed
+
+# Env
+.env
+
+# Dist
+dist/
+typings/
+docs/
 
 # Miscellaneous
 .tmp/
-.vscode/
-dist/
-docs/docs.json
+coverage/
+tsconfig.tsbuildinfo

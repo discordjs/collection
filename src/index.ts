@@ -14,7 +14,7 @@ export interface CollectionConstructor {
  */
 export class Collection<K, V> extends Map<K, V> {
 	public static readonly default: typeof Collection = Collection;
-	public ['constructor']: CollectionConstructor;
+	public override ['constructor']: CollectionConstructor;
 
 	/**
 	 * Identical to [Map.get()](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Map/get).
@@ -22,7 +22,7 @@ export class Collection<K, V> extends Map<K, V> {
 	 * @param {*} key - The key to get from this collection
 	 * @returns {* | undefined}
 	 */
-	public get(key: K): V | undefined {
+	public override get(key: K): V | undefined {
 		return super.get(key);
 	}
 
@@ -33,7 +33,7 @@ export class Collection<K, V> extends Map<K, V> {
 	 * @param {*} value - The value of the element to add
 	 * @returns {Collection}
 	 */
-	public set(key: K, value: V): this {
+	public override set(key: K, value: V): this {
 		return super.set(key, value);
 	}
 
@@ -43,7 +43,7 @@ export class Collection<K, V> extends Map<K, V> {
 	 * @param {*} key - The key of the element to check for
 	 * @returns {boolean} `true` if the element exists, `false` if it does not exist.
 	 */
-	public has(key: K): boolean {
+	public override has(key: K): boolean {
 		return super.has(key);
 	}
 
@@ -53,7 +53,7 @@ export class Collection<K, V> extends Map<K, V> {
 	 * @param {*} key - The key to delete from the collection
 	 * @returns {boolean} `true` if the element was removed, `false` if the element does not exist.
 	 */
-	public delete(key: K): boolean {
+	public override delete(key: K): boolean {
 		return super.delete(key);
 	}
 
@@ -62,7 +62,7 @@ export class Collection<K, V> extends Map<K, V> {
 	 * Removes all elements from the collection.
 	 * @returns {undefined}
 	 */
-	public clear(): void {
+	public override clear(): void {
 		return super.clear();
 	}
 
@@ -358,6 +358,7 @@ export class Collection<K, V> extends Map<K, V> {
 		const iter = this.entries();
 		return Array.from({ length: this.size }, (): T => {
 			const [key, value] = iter.next().value;
+			// eslint-disable-next-line @typescript-eslint/no-unsafe-argument
 			return fn(value, key, this);
 		});
 	}

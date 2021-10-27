@@ -1,32 +1,46 @@
 {
+	// Mapped from https://www.typescriptlang.org/tsconfig
 	"compilerOptions": {
-		"strict": true,
-		"moduleResolution": "node",
-		"module": "commonjs",
-		"target": "es2019",
-		"lib": [
-			"esnext",
-			"esnext.array",
-			"esnext.asynciterable",
-			"esnext.intl",
-			"esnext.symbol"
-		],
-		"sourceMap": false,
-		"inlineSourceMap": true,
-		"inlineSources": true,
-		"sourceRoot": "/",
-		"outDir": "dist",
-		"declaration": true,
-		"removeComments": false,
-		"alwaysStrict": true,
-		"allowSyntheticDefaultImports": true,
-		"pretty": true,
-		"noEmitOnError": true,
+		// Type Checking
+		"allowUnreachableCode": false,
+		"allowUnusedLabels": false,
+		"exactOptionalPropertyTypes": true,
+		"noFallthroughCasesInSwitch": true,
+		"noImplicitOverride": true,
 		"noImplicitReturns": true,
 		"noUnusedLocals": true,
-		"noUnusedParameters": true
+		"noUnusedParameters": true,
+		"strict": true,
+		"useUnknownInCatchVariables": true,
+
+		// Modules
+		"module": "CommonJS",
+		"moduleResolution": "node",
+		"resolveJsonModule": true,
+
+		// Emit
+		"declaration": true,
+		"importHelpers": true,
+		"importsNotUsedAsValues": "error",
+		"inlineSources": true,
+		"newLine": "lf",
+		"noEmitHelpers": true,
+		"outDir": "dist",
+		"preserveConstEnums": true,
+		"removeComments": false,
+		"sourceMap": true,
+		"esModuleInterop": true,
+		"forceConsistentCasingInFileNames": true,
+
+		// Language and Environment
+		"emitDecoratorMetadata": true,
+		"experimentalDecorators": true,
+		"lib": ["ESNext"],
+		"target": "ES2020",
+		"useDefineForClassFields": true,
+
+		// Completeness
+		"skipLibCheck": true
 	},
-	"include": [
-		"src/**/*"
-	]
+	"include": ["src/**/*.ts"]
 }

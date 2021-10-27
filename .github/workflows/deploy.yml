@@ -10,15 +10,18 @@ jobs:
     runs-on: ubuntu-latest
     steps:
       - name: Checkout repository
-        uses: actions/checkout@master
+        uses: actions/checkout@2
 
-      - name: Install Node v14
-        uses: actions/setup-node@master
+      - name: Install Node v16
+        uses: actions/setup-node@2
         with:
-          node-version: 14
+          node-version: 16
 
       - name: Install dependencies
-        run: npm install
+        run: npm ci
+
+      - name: Run Documentation Tests
+        run: npm run docs:test
 
       - name: Build and deploy documentation
         uses: discordjs/action-docs@v1

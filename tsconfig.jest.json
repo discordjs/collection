@@ -1,5 +1,0 @@
-{
-	"extends": "./tsconfig.json",
-	"module": "commonjs",
-	"include": ["test"]
-}

@@ -1,5 +1,3 @@
-/* eslint-disable no-console, @typescript-eslint/no-var-requires */
-
 import Collection from '../src';
 
 type TestCollection = Collection<string, number>;
