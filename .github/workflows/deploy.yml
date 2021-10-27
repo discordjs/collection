@@ -10,10 +10,10 @@ jobs:
     runs-on: ubuntu-latest
     steps:
       - name: Checkout repository
-        uses: actions/checkout@2
+        uses: actions/checkout@v2
 
       - name: Install Node v16
-        uses: actions/setup-node@2
+        uses: actions/setup-node@v2
         with:
           node-version: 16
 
