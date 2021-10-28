@@ -11,6 +11,11 @@ jobs:
     steps:
       - name: Checkout repository
         uses: actions/checkout@v2
+        with:
+          persist-credentials: false
+
+      - name: Reconfigure git to use HTTPS authentication
+        uses: GuillaumeFalourd/SSH-to-HTTPS@v1
 
       - name: Install Node v16
         uses: actions/setup-node@v2
@@ -19,9 +24,6 @@ jobs:
 
       - name: Install dependencies
         run: npm ci
-
-      - name: Run Documentation Tests
-        run: npm run docs:test
 
       - name: Build and deploy documentation
         uses: discordjs/action-docs@v1
