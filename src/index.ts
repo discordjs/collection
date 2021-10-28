@@ -6,65 +6,60 @@ export interface CollectionConstructor {
 	readonly [Symbol.species]: CollectionConstructor;
 }
 
+// Separate interface for the constructor so that emitted js does not have a constructor that overwrites itself
+export interface Collection<K, V> extends Map<K, V> {
+	constructor: CollectionConstructor;
+}
+
 /**
  * A Map with additional utility methods. This is used throughout discord.js rather than Arrays for anything that has
  * an ID, for significantly improved performance and ease-of-use.
  * @extends {Map}
  * @property {number} size - The amount of elements in this collection.
  */
+/* eslint-disable-next-line no-redeclare */
 export class Collection<K, V> extends Map<K, V> {
 	public static readonly default: typeof Collection = Collection;
-	public override ['constructor']: CollectionConstructor;
 
 	/**
 	 * Identical to [Map.get()](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Map/get).
 	 * Gets an element with the specified key, and returns its value, or `undefined` if the element does not exist.
+	 * @method Collection#get
 	 * @param {*} key - The key to get from this collection
 	 * @returns {* | undefined}
 	 */
-	public override get(key: K): V | undefined {
-		return super.get(key);
-	}
 
 	/**
 	 * Identical to [Map.set()](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Map/set).
 	 * Sets a new element in the collection with the specified key and value.
+	 * @method Collection#set
 	 * @param {*} key - The key of the element to add
 	 * @param {*} value - The value of the element to add
 	 * @returns {Collection}
 	 */
-	public override set(key: K, value: V): this {
-		return super.set(key, value);
-	}
 
 	/**
 	 * Identical to [Map.has()](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Map/has).
 	 * Checks if an element exists in the collection.
+	 * @method Collection#has
 	 * @param {*} key - The key of the element to check for
 	 * @returns {boolean} `true` if the element exists, `false` if it does not exist.
 	 */
-	public override has(key: K): boolean {
-		return super.has(key);
-	}
 
 	/**
 	 * Identical to [Map.delete()](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Map/delete).
 	 * Deletes an element from the collection.
+	 * @method Collection#delete
 	 * @param {*} key - The key to delete from the collection
 	 * @returns {boolean} `true` if the element was removed, `false` if the element does not exist.
 	 */
-	public override delete(key: K): boolean {
-		return super.delete(key);
-	}
 
 	/**
 	 * Identical to [Map.clear()](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Map/clear).
 	 * Removes all elements from the collection.
+	 * @method Collection#clear
 	 * @returns {undefined}
 	 */
-	public override clear(): void {
-		return super.clear();
-	}
 
 	/**
 	 * Checks if all of the elements exist in the collection.
