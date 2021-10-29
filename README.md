@@ -30,9 +30,9 @@ pnpm add @discordjs/collection
 
 - [Website](https://discord.js.org/) ([source](https://github.com/discordjs/website))
 - [Documentation](https://discord.js.org/#/docs/collection)
-- [Discord.js Discord server](https://discord.gg/djs)
+- [discord.js Discord server](https://discord.gg/djs)
 - [GitHub](https://github.com/discordjs/collection)
-- [NPM](https://www.npmjs.com/package/collection)
+- [NPM](https://www.npmjs.com/package/@discordjs/collection)
 
 ## Contributing
 
@@ -43,4 +43,4 @@ See [the contribution guide](https://github.com/discordjs/collection/blob/main/.
 ## Help
 
 If you don't understand something in the documentation, you are experiencing problems, or you just need a gentle
-nudge in the right direction, please don't hesitate to join our official [Discord.js Server](https://discord.gg/djs).
+nudge in the right direction, please don't hesitate to join our official [discord.js Server](https://discord.gg/djs).
