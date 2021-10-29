@@ -9,6 +9,7 @@
 		"jest": true
 	},
 	"rules": {
+		"no-redeclare": 0,
 		"@typescript-eslint/naming-convention": 0
 	}
 }
