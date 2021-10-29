@@ -185,6 +185,7 @@ export class Collection<K, V> extends Map<K, V> {
 	/**
 	 * Identical to [Array.reverse()](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Array/reverse)
 	 * but returns a Collection instead of an Array.
+	 *
 	 * @returns {Collection}
 	 */
 	public reverse(): this {
