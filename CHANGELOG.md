@@ -2,6 +2,15 @@
 
 All notable changes to this project will be documented in this file. See [standard-version](https://github.com/conventional-changelog/standard-version) for commit guidelines.
 
+## [0.3.2](https://github.com/discordjs/collection/compare/v0.3.1...v0.3.2) (2021-10-29)
+
+
+### Bug Fixes
+
+* update doc engine ([4c0e24f](https://github.com/discordjs/collection/commit/4c0e24fae0323db9de1991db9cfacc093d529abc))
+
+
+
 ## [0.3.1](https://github.com/discordjs/collection/compare/v0.3.0...v0.3.1) (2021-10-29)
 
 
