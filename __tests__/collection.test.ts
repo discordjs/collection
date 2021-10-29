@@ -365,6 +365,18 @@ describe('hasAny() tests', () => {
 	});
 });
 
+describe('reverse() tests', () => {
+	const coll = new Collection();
+	coll.set('a', 1);
+	coll.set('b', 2);
+	coll.set('c', 3);
+
+	coll.reverse();
+
+	expect([...coll.values()]).toStrictEqual([3, 2, 1]);
+	expect([...coll.keys()]).toStrictEqual(['c', 'b', 'a']);
+});
+
 describe('random thisArg tests', () => {
 	const coll = new Collection();
 	coll.set('a', 3);
