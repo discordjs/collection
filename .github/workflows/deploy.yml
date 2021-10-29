@@ -4,6 +4,8 @@ on:
     branches:
       - '*'
       - '!docs'
+    tags:
+      - '*'
 jobs:
   docs:
     name: Documentation
@@ -11,11 +13,6 @@ jobs:
     steps:
       - name: Checkout repository
         uses: actions/checkout@v2
-        with:
-          persist-credentials: false
-
-      - name: Reconfigure git to use HTTPS authentication
-        uses: GuillaumeFalourd/SSH-to-HTTPS@v1
 
       - name: Install Node v16
         uses: actions/setup-node@v2
