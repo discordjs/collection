@@ -51,7 +51,6 @@
 	},
 	"homepage": "https://github.com/discordjs/collection",
 	"devDependencies": {
-		"@babel/cli": "^7.15.7",
 		"@babel/core": "^7.15.8",
 		"@babel/preset-env": "^7.15.8",
 		"@babel/preset-typescript": "^7.15.0",
@@ -69,7 +68,6 @@
 		"husky": "^7.0.4",
 		"is-ci": "^3.0.1",
 		"jest": "^27.3.1",
-		"jsdoc-babel": "^0.5.0",
 		"lint-staged": "^11.2.6",
 		"prettier": "^2.4.1",
 		"standard-version": "^9.3.2",
