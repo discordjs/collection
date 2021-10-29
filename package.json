@@ -1,6 +1,6 @@
 {
 	"name": "@discordjs/collection",
-	"version": "0.2.4",
+	"version": "0.3.0",
 	"description": "Utility data structure used in Discord.js",
 	"scripts": {
 		"pretest": "npm run build",

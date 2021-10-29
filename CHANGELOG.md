@@ -2,6 +2,17 @@
 
 All notable changes to this project will be documented in this file. See [standard-version](https://github.com/conventional-changelog/standard-version) for commit guidelines.
 
+# [0.3.0](https://github.com/discordjs/collection/compare/v0.2.4...v0.3.0) (2021-10-29)
+
+
+### Features
+
+* add Collection#at() and Collection#keyAt() ([#46](https://github.com/discordjs/collection/issues/46)) ([66b30b9](https://github.com/discordjs/collection/commit/66b30b91069502493383c059cc38e27c152bf541))
+* improve documentation and resolve [#49](https://github.com/discordjs/collection/issues/49) ([aec01c6](https://github.com/discordjs/collection/commit/aec01c6ae3ff50b0b5f7c070bff10f01bf98d803))
+* ts-docgen ([463b131](https://github.com/discordjs/collection/commit/463b1314e60f2debc526454a6ccd7ce8a9a4ae8a))
+
+
+
 ## [0.2.4](https://github.com/discordjs/collection/compare/v0.2.3...v0.2.4) (2021-10-27)
 
 
