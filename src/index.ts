@@ -125,7 +125,7 @@ export class Collection<K, V> extends Map<K, V> {
 	 *
 	 * @param index The index of the element to obtain
 	 */
-	public at(index = 0) {
+	public at(index: number) {
 		index = Math.floor(index);
 		const arr = [...this.values()];
 		return arr.at(index);
@@ -138,7 +138,7 @@ export class Collection<K, V> extends Map<K, V> {
 	 *
 	 * @param index The index of the key to obtain
 	 */
-	public keyAt(index = 0) {
+	public keyAt(index: number) {
 		index = Math.floor(index);
 		const arr = [...this.keys()];
 		return arr.at(index);
