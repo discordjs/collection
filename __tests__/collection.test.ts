@@ -444,13 +444,14 @@ describe('ensure() tests', () => {
 	test('set new value if key does not exist', () => {
 		coll.ensure('c', () => 3);
 		expect(coll.size).toStrictEqual(3);
-		expect(coll.has('c')).toBeTruthy();
+		expect(coll.get('c')).toStrictEqual(3);
 	});
 
 	test('return existing value if key exists', () => {
 		const ensureB = coll.ensure('b', () => 3);
 		const getB = coll.get('b');
-		expect(ensureB).toBe(getB);
+		expect(ensureB).toStrictEqual(2);
+		expect(getB).toStrictEqual(2);
 		expect(coll.size).toStrictEqual(3);
 	});
 
