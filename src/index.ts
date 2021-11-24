@@ -35,7 +35,7 @@ export class Collection<K, V> extends Map<K, V> {
 	 * collection.ensure(guildId, () => defaultGuildConfig);
 	 */
 	public ensure(key: K, defaultValueGenerator: (key: K, collection: this) => V): V {
-		if (this.has(key)) return this.get(key);
+		if (this.has(key)) return this.get(key)!;
 		const defaultValue = defaultValueGenerator(key, this);
 		this.set(key, defaultValue);
 		return defaultValue;
