@@ -28,10 +28,8 @@ export class Collection<K, V> extends Map<K, V> {
 	/**
 	 * Obtains an element if the key exists, otherwise sets and returns the value provided by the default value generator.
 	 *
-	 * @param {*} key - The key to get from if it exists or set otherwise
-	 * @param {Function} defaultValueGenerator - A function that returns the ensured value
-	 *
-	 * @returns The existing value if any, otherwise the value provided by the default value generator.
+	 * @param key The key to get from if it exists or set otherwise
+	 * @param defaultValueGenerator A function that returns the ensured value
 	 *
 	 * @example
 	 * collection.ensure(guildId, () => defaultGuildConfig);
