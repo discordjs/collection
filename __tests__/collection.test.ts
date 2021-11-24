@@ -437,19 +437,22 @@ describe('random thisArg tests', () => {
 });
 
 describe('ensure() tests', () => {
+	function createTestCollection() {
+		return new Collection([
+			['a', 1],
+			['b', 2],
+		]);
+	}
+
 	test('set new value if key does not exist', () => {
-		const coll = new Collection();
-		coll.set('a', 1);
-		coll.set('b', 2);
+		const coll = createTestCollection();
 		coll.ensure('c', () => 3);
 		expect(coll.size).toStrictEqual(3);
 		expect(coll.get('c')).toStrictEqual(3);
 	});
 
 	test('return existing value if key exists', () => {
-		const coll = new Collection();
-		coll.set('a', 1);
-		coll.set('b', 2);
+		const coll = createTestCollection();
 		const ensureB = coll.ensure('b', () => 3);
 		const getB = coll.get('b');
 		expect(ensureB).toStrictEqual(2);
@@ -458,9 +461,7 @@ describe('ensure() tests', () => {
 	});
 
 	test('ensure with existing key should not change the collection', () => {
-		const coll = new Collection();
-		coll.set('a', 1);
-		coll.set('b', 2);
+		const coll = createTestCollection();
 		coll.ensure('a', () => 4);
 		expect(coll.size).toStrictEqual(2);
 		expect(coll.get('a')).toStrictEqual(1);
