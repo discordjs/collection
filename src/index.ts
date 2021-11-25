@@ -26,10 +26,10 @@ export class Collection<K, V> extends Map<K, V> {
 	public static readonly default: typeof Collection = Collection;
 
 	/**
-	 * Obtains the value of the given key if set, otherwise sets the value provided by the default value generator and returns it.
+	 * Obtains the value of the given key if it exists, otherwise sets and returns the value provided by the default value generator.
 	 *
 	 * @param key The key to get if it exists, or set otherwise
-	 * @param defaultValueGenerator A function that generates the value to be set if it's missing
+	 * @param defaultValueGenerator A function that generates the default value
 	 *
 	 * @example
 	 * collection.ensure(guildId, () => defaultGuildConfig);
