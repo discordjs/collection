@@ -459,11 +459,4 @@ describe('ensure() tests', () => {
 		expect(getB).toStrictEqual(2);
 		expect(coll.size).toStrictEqual(2);
 	});
-
-	test('ensure with existing key should not change the collection', () => {
-		const coll = createTestCollection();
-		coll.ensure('a', () => 4);
-		expect(coll.size).toStrictEqual(2);
-		expect(coll.get('a')).toStrictEqual(1);
-	});
 });
