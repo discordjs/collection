@@ -26,7 +26,7 @@ export class Collection<K, V> extends Map<K, V> {
 	public static readonly default: typeof Collection = Collection;
 
 	/**
-	 * Obtains an element if the key exists, otherwise sets and returns the value provided by the default value generator.
+	 * Obtains the value of the given key if set, otherwise sets the value provided by the default value generator and returns it.
 	 *
 	 * @param key The key to get from if it exists or set otherwise
 	 * @param defaultValueGenerator A function that returns the ensured value
