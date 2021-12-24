@@ -26,6 +26,22 @@ export class Collection<K, V> extends Map<K, V> {
 	public static readonly default: typeof Collection = Collection;
 
 	/**
+	 * Obtains the value of the given key if it exists, otherwise sets and returns the value provided by the default value generator.
+	 *
+	 * @param key The key to get if it exists, or set otherwise
+	 * @param defaultValueGenerator A function that generates the default value
+	 *
+	 * @example
+	 * collection.ensure(guildId, () => defaultGuildConfig);
+	 */
+	public ensure(key: K, defaultValueGenerator: (key: K, collection: this) => V): V {
+		if (this.has(key)) return this.get(key)!;
+		const defaultValue = defaultValueGenerator(key, this);
+		this.set(key, defaultValue);
+		return defaultValue;
+	}
+
+	/**
 	 * Checks if all of the elements exist in the collection.
 	 *
 	 * @param keys - The keys of the elements to check for

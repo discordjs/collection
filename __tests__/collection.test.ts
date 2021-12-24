@@ -435,3 +435,28 @@ describe('random thisArg tests', () => {
 		}, array);
 	});
 });
+
+describe('ensure() tests', () => {
+	function createTestCollection() {
+		return new Collection([
+			['a', 1],
+			['b', 2],
+		]);
+	}
+
+	test('set new value if key does not exist', () => {
+		const coll = createTestCollection();
+		coll.ensure('c', () => 3);
+		expect(coll.size).toStrictEqual(3);
+		expect(coll.get('c')).toStrictEqual(3);
+	});
+
+	test('return existing value if key exists', () => {
+		const coll = createTestCollection();
+		const ensureB = coll.ensure('b', () => 3);
+		const getB = coll.get('b');
+		expect(ensureB).toStrictEqual(2);
+		expect(getB).toStrictEqual(2);
+		expect(coll.size).toStrictEqual(2);
+	});
+});
