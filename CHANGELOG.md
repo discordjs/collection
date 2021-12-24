@@ -2,6 +2,16 @@
 
 All notable changes to this project will be documented in this file. See [standard-version](https://github.com/conventional-changelog/standard-version) for commit guidelines.
 
+# [0.4.0](https://github.com/discordjs/collection/compare/v0.3.2...v0.4.0) (2021-12-24)
+
+
+### Features
+
+* add #reverse ([#48](https://github.com/discordjs/collection/issues/48)) ([8bcb5e2](https://github.com/discordjs/collection/commit/8bcb5e21bcc15f5b77612d8ff03dec6c37f4d449))
+* add Collection#ensure ([#52](https://github.com/discordjs/collection/issues/52)) ([3809eb4](https://github.com/discordjs/collection/commit/3809eb4d18e70459355d310919a3f57747eee3dd))
+
+
+
 ## [0.3.2](https://github.com/discordjs/collection/compare/v0.3.1...v0.3.2) (2021-10-29)
 
 
