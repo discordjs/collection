@@ -19,15 +19,6 @@ export interface Collection<K, V> extends Map<K, V> {
 }
 
 /**
- * A utility type for merging type of collections with two seperate value types.
- *
- * @internal
- */
-export type ValueMerged<K, V, C2 extends Collection<K, unknown>> = C2 extends Collection<K, infer O>
-	? Collection<K, O | V>
-	: never;
-
-/**
  * A Map with additional utility methods. This is used throughout discord.js rather than Arrays for anything that has
  * an ID, for significantly improved performance and ease-of-use.
  */
@@ -638,9 +629,8 @@ export class Collection<K, V> extends Map<K, V> {
 	 *
 	 * @param other The other Collection to filter against
 	 */
-	public intersect<C extends Collection<K, unknown>>(other: C): ValueMerged<K, V, C>;
-	public intersect(other: Collection<K, V>) {
-		const coll = new this.constructor[Symbol.species]<K, V>();
+	public intersect<T>(other: Collection<K, T>): Collection<K, V | T> {
+		const coll = new this.constructor[Symbol.species]<K, V | T>();
 		for (const [k, v] of other) {
 			if (this.has(k)) coll.set(k, v);
 		}
@@ -652,9 +642,8 @@ export class Collection<K, V> extends Map<K, V> {
 	 *
 	 * @param other The other Collection to filter against
 	 */
-	public difference<C extends Collection<K, unknown>>(other: C): ValueMerged<K, V, C>;
-	public difference(other: Collection<K, V>) {
-		const coll = new this.constructor[Symbol.species]<K, V>();
+	public difference<T>(other: Collection<K, T>): Collection<K, V | T> {
+		const coll = new this.constructor[Symbol.species]<K, V | T>();
 		for (const [k, v] of other) {
 			if (!this.has(k)) coll.set(k, v);
 		}
